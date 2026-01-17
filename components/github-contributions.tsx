@@ -1,170 +1,381 @@
 "use client"
 
-import { useMemo } from "react"
+import { useEffect, useState, useMemo, useRef } from "react"
+import { createPortal } from "react-dom"
+import { cn } from "@/lib/utils"
+import { ChevronDown, MoreHorizontal } from "lucide-react"
 
 interface ContributionDay {
-  date: Date
+  date: string
   count: number
   level: 0 | 1 | 2 | 3 | 4
 }
 
-function generateContributionData(): ContributionDay[] {
-  const data: ContributionDay[] = []
-  const today = new Date()
-  const startDate = new Date(today)
-  startDate.setFullYear(startDate.getFullYear() - 1)
-  startDate.setDate(startDate.getDate() - startDate.getDay()) // Start from Sunday
-
-  for (let i = 0; i < 53 * 7; i++) {
-    const date = new Date(startDate)
-    date.setDate(date.getDate() + i)
-
-    if (date > today) {
-      data.push({ date, count: 0, level: 0 })
-      continue
-    }
-
-    // Generate realistic-looking contribution patterns
-    const dayOfWeek = date.getDay()
-    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6
-    const random = Math.random()
-
-    let count = 0
-    let level: 0 | 1 | 2 | 3 | 4 = 0
-
-    if (isWeekend) {
-      // Less activity on weekends
-      if (random > 0.6) {
-        count = Math.floor(Math.random() * 5) + 1
-        level = count <= 2 ? 1 : count <= 4 ? 2 : 3
-      }
-    } else {
-      // More activity on weekdays
-      if (random > 0.15) {
-        count = Math.floor(Math.random() * 12) + 1
-        level = count <= 2 ? 1 : count <= 5 ? 2 : count <= 8 ? 3 : 4
-      }
-    }
-
-    data.push({ date, count, level })
+interface ApiResponse {
+  total: {
+    [year: string]: number
   }
-
-  return data
+  contributions: ContributionDay[]
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
-export function GitHubContributions() {
-  const contributions = useMemo(() => generateContributionData(), [])
+export function GitHubContributions({ username = "cristim67" }: { username?: string }) {
+  const [data, setData] = useState<ContributionDay[]>([])
+  const [lastYearData, setLastYearData] = useState<any>(null)
+  const [years, setYears] = useState<number[]>([])
+  const [selectedYear, setSelectedYear] = useState<number | "lastYear" | null>(null)
+  const [totalContributions, setTotalContributions] = useState(0)
+  const [loading, setLoading] = useState(true)
+  
+  const [showDropdown, setShowDropdown] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
-  // Group contributions by week
-  const weeks: ContributionDay[][] = []
-  for (let i = 0; i < contributions.length; i += 7) {
-    weeks.push(contributions.slice(i, i + 7))
-  }
+  const [hoveredDay, setHoveredDay] = useState<{ day: ContributionDay; x: number; y: number } | null>(null)
 
-  // Calculate month labels positions
-  const monthLabels: { month: string; position: number }[] = []
-  let lastMonth = -1
-  weeks.forEach((week, weekIndex) => {
-    const firstDayOfWeek = week[0]
-    const month = firstDayOfWeek.date.getMonth()
-    if (month !== lastMonth) {
-      monthLabels.push({ month: MONTHS[month], position: weekIndex })
-      lastMonth = month
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [allResponse, lastResponse] = await Promise.all([
+             fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=all`),
+             fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`)
+        ])
+
+        const allJson: ApiResponse = await allResponse.json()
+        const lastJson = await lastResponse.json()
+        
+        // Sort data ascending
+        const sortedData = allJson.contributions.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        setData(sortedData)
+        setLastYearData(lastJson)
+        
+        const availableYears = Object.keys(allJson.total)
+          .map(Number)
+          .sort((a, b) => b - a)
+        
+        setYears(availableYears)
+        setSelectedYear("lastYear")
+
+      } catch (error) {
+        console.error("Failed to fetch GitHub contributions:", error)
+      } finally {
+        setLoading(false)
+      }
     }
-  })
 
-  // Calculate total contributions
-  const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0)
+    fetchData()
+  }, [username])
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            setShowDropdown(false)
+        }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+
+  const { weeks, total, yearLabel } = useMemo(() => {
+    if (data.length === 0 || !selectedYear) return { weeks: [], total: 0, yearLabel: "" }
+
+    let processedData: ContributionDay[] = []
+    let label = ""
+
+    if (selectedYear === "lastYear") {
+        if (lastYearData && lastYearData.contributions) {
+            // Usually y=last returns { contributions: [ ... ] }
+            processedData = lastYearData.contributions
+            label = "in the last year"
+        } else {
+            // Fallback if not loaded yet
+             processedData = []
+        }
+    } else {
+        processedData = data.filter(d => new Date(d.date).getFullYear() === selectedYear)
+        label = `in ${selectedYear}`
+    }
+
+    if (processedData.length === 0) return { weeks: [], total: 0, yearLabel: label }
+
+    const totalCount = processedData.reduce((sum, day) => sum + day.count, 0)
+    
+    // --- Grid Generation ---
+    const firstDate = new Date(processedData[0].date)
+    const startDay = firstDate.getDay() // 0 = Sun
+    
+    const gridData: (ContributionDay | null)[] = []
+    
+    for (let i = 0; i < startDay; i++) {
+        gridData.push(null)
+    }
+    
+    gridData.push(...processedData)
+    
+    // Chunk
+    const weeksChunked: (ContributionDay | null)[][] = []
+    let currentWeek: (ContributionDay | null)[] = []
+    
+    gridData.forEach((day) => {
+        currentWeek.push(day)
+        if (currentWeek.length === 7) {
+            weeksChunked.push(currentWeek)
+            currentWeek = []
+        }
+    })
+    
+    if (currentWeek.length > 0) {
+        while (currentWeek.length < 7) {
+            currentWeek.push(null)
+        }
+        weeksChunked.push(currentWeek)
+    }
+
+    return { weeks: weeksChunked, total: totalCount, yearLabel: label }
+  }, [data, selectedYear])
+
+  useEffect(() => {
+    if (total > 0) {
+        setTotalContributions(total)
+    }
+  }, [total])
+
 
   const getLevelColor = (level: number) => {
     switch (level) {
       case 0:
-        return "bg-muted"
+        return "bg-secondary" 
       case 1:
-        return "bg-emerald-900/50 dark:bg-emerald-400/30"
+        return "bg-primary/20" 
       case 2:
-        return "bg-emerald-700/70 dark:bg-emerald-400/50"
+        return "bg-primary/40"
       case 3:
-        return "bg-emerald-600 dark:bg-emerald-400/70"
+        return "bg-primary/70" 
       case 4:
-        return "bg-emerald-500 dark:bg-emerald-400"
+        return "bg-primary" 
       default:
-        return "bg-muted"
+        return "bg-secondary"
     }
   }
 
+  // Month Labels
+  const monthLabels: { month: string; position: number }[] = []
+  let lastMonth = -1
+  weeks.forEach((week, weekIndex) => {
+      const firstValidDay = week.find(d => d !== null)
+      if (firstValidDay) {
+          const date = new Date(firstValidDay.date)
+          const month = date.getMonth()
+          if (month !== lastMonth) {
+              monthLabels.push({ month: MONTHS[month], position: weekIndex })
+              lastMonth = month
+          }
+      }
+  })
+
+  if (loading) {
+    return (
+      <div className="animate-pulse space-y-4">
+        <div className="h-[200px] w-full bg-muted/10 rounded-xl" />
+      </div>
+    )
+  }
+
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground">
-          <span className="text-foreground font-medium">{totalContributions.toLocaleString()}</span> contributions in
-          the last year
-        </div>
-      </div>
+    <div className="w-full flex flex-col xl:flex-row gap-8">
+        {/* Column 1: Header + Grid */}
+        <div className="flex-1 min-w-0">
+             {/* Header */}
+             <div className="mb-8">
+                 <div className="text-xl sm:text-2xl font-light tracking-tight text-foreground">
+                    {totalContributions.toLocaleString()} contributions {yearLabel}
+                 </div>
+             </div>
 
-      <div className="overflow-x-auto pb-2">
-        <div className="inline-block min-w-full">
-          {/* Month labels */}
-          <div className="flex mb-2 text-xs text-muted-foreground">
-            <div className="w-8 shrink-0" />
-            <div className="flex relative" style={{ width: weeks.length * 13 }}>
-              {monthLabels.map((label, i) => (
-                <span key={i} className="absolute" style={{ left: label.position * 13 }}>
-                  {label.month}
-                </span>
-              ))}
-            </div>
-          </div>
+            {/* Grid */}
+            <div className="overflow-x-auto scrollbar-hide pb-2 relative z-0">
+                <div className="min-w-max">
+                        {/* Month Labels */}
+                        <div className="flex mb-3 text-xs font-medium text-muted-foreground/60 select-none">
+                        <div className="w-8 shrink-0" />
+                        <div className="relative flex h-4">
+                            {monthLabels.map((label, i) => (
+                                    <span key={i} className="absolute" style={{ left: `${label.position * 14}px` }}>
+                                    {label.month}
+                                    </span>
+                            ))}
+                        </div>
+                        </div>
 
-          <div className="flex">
-            {/* Day labels */}
-            <div className="flex flex-col gap-[3px] text-xs text-muted-foreground mr-2 shrink-0">
-              {DAYS.map((day, i) => (
-                <div
-                  key={day}
-                  className="h-[10px] flex items-center"
-                  style={{ visibility: i % 2 === 1 ? "visible" : "hidden" }}
-                >
-                  {day}
+                        <div className="flex gap-2">
+                            {/* Weekday Labels */}
+                            <div className="flex flex-col gap-[4px] py-[2px] text-[10px] font-medium text-muted-foreground/50 w-8 select-none pt-[14px] ">
+                                {/* 
+                                    Grid Pitch is 10px (cell) + 4px (gap) = 14px.
+                                    We align with rows 1 (Mon), 3 (Wed), 5 (Fri).
+                                */}
+                                {/* Mon */}
+                                <div className="h-[10px] flex items-center">Mon</div>
+                                
+                                {/* Tue (gap) */}
+                                <div className="h-[10px]" />
+                                
+                                {/* Wed */}
+                                <div className="h-[10px] flex items-center">Wed</div>
+                                
+                                {/* Thu (gap) */}
+                                <div className="h-[10px]" />
+                                
+                                {/* Fri */}
+                                <div className="h-[10px] flex items-center">Fri</div>
+                            </div>
+                            
+                            {/* Grid */}
+                            <div className="flex gap-[4px]">
+                                {weeks.map((week, weekIndex) => (
+                                    <div key={weekIndex} className="flex flex-col gap-[4px]">
+                                        {week.map((day, dayIndex) => (
+                                            day ? (
+                                                <div
+                                                key={day.date}
+                                                className={cn(
+                                                    "w-[10px] h-[10px] rounded-[2px] transition-all duration-200",
+                                                    getLevelColor(day.level),
+                                                    "hover:ring-2 hover:ring-foreground/50 hover:z-20 hover:scale-125 cursor-crosshair"
+                                                )}
+                                                onMouseEnter={(e) => {
+                                                    setHoveredDay({
+                                                        day,
+                                                        x: e.clientX,
+                                                        y: e.clientY
+                                                    })
+                                                }}
+                                                onMouseLeave={() => setHoveredDay(null)}
+                                                />
+                                            ) : (
+                                                <div key={`empty-${weekIndex}-${dayIndex}`} className="w-[10px] h-[10px]" />
+                                            )
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        <div className="mt-6 flex items-center gap-2 text-[10px] text-muted-foreground select-none ml-10">
+                        <span>Less</span>
+                        <div className="flex gap-1">
+                            <div className="w-[10px] h-[10px] rounded-[2px] bg-secondary" />
+                            <div className="w-[10px] h-[10px] rounded-[2px] bg-primary/20" />
+                            <div className="w-[10px] h-[10px] rounded-[2px] bg-primary/40" />
+                            <div className="w-[10px] h-[10px] rounded-[2px] bg-primary/70" />
+                            <div className="w-[10px] h-[10px] rounded-[2px] bg-primary" />
+                        </div>
+                        <span>More</span>
+                        </div>
                 </div>
-              ))}
             </div>
-
-            {/* Contribution grid */}
-            <div className="flex gap-[3px]">
-              {weeks.map((week, weekIndex) => (
-                <div key={weekIndex} className="flex flex-col gap-[3px]">
-                  {week.map((day, dayIndex) => (
-                    <div
-                      key={dayIndex}
-                      className={`w-[10px] h-[10px] rounded-sm ${getLevelColor(day.level)} transition-colors duration-200 hover:ring-1 hover:ring-foreground/50`}
-                      title={`${day.count} contributions on ${day.date.toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}`}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Legend */}
-          <div className="flex items-center justify-end gap-2 mt-4 text-xs text-muted-foreground">
-            <span>Less</span>
-            <div className="flex gap-[3px]">
-              {[0, 1, 2, 3, 4].map((level) => (
-                <div key={level} className={`w-[10px] h-[10px] rounded-sm ${getLevelColor(level)}`} />
-              ))}
-            </div>
-            <span>More</span>
-          </div>
         </div>
-      </div>
+
+        {/* Column 2: Vertical Button Stack */}
+        <div className="flex xl:flex-col flex-row flex-wrap gap-2 xl:w-32 shrink-0 content-start">
+             {/* 1. Last Year Button */}
+             <button
+                onClick={() => {
+                    setSelectedYear("lastYear")
+                    setShowDropdown(false)
+                }}
+                className={cn(
+                    "px-4 py-2 text-sm text-left rounded-lg transition-all duration-200 border w-full",
+                    selectedYear === "lastYear"
+                        ? "bg-primary text-primary-foreground border-primary font-medium shadow-md" 
+                        : "bg-transparent text-muted-foreground border-transparent hover:bg-muted/50 hover:text-foreground"
+                )}
+             >
+                Last Year
+             </button>
+
+             {/* 2. Explicit Years (First 3) */}
+             {years.slice(0, 3).map(year => (
+                 <button
+                    key={year}
+                    onClick={() => {
+                        setSelectedYear(year)
+                        setShowDropdown(false)
+                    }}
+                    className={cn(
+                        "px-4 py-2 text-sm text-left rounded-lg transition-all duration-200 w-full",
+                         selectedYear === year
+                            ? "bg-muted text-foreground font-medium" 
+                            : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                    )}
+                 >
+                    {year}
+                 </button>
+             ))}
+
+             {/* 3. "More" Dropdown for Older Years */}
+             {years.length > 3 && (
+                 <div className="relative w-full">
+                     <button 
+                        onClick={() => setShowDropdown(!showDropdown)}
+                        className={cn(
+                             "flex items-center justify-between px-4 py-2 w-full rounded-lg transition-all duration-200 text-sm",
+                             showDropdown || (selectedYear !== "lastYear" && !years.slice(0, 3).includes(selectedYear as number))
+                                ? "text-foreground font-medium"
+                                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        )}
+                     >
+                        <span>More</span>
+                        <ChevronDown className={cn("w-3 h-3 transition-transform", showDropdown ? "rotate-180" : "")} />
+                     </button>
+
+                     {/* Dropdown Menu */}
+                     {showDropdown && (
+                         <div className="absolute left-0 top-full mt-2 xl:left-full xl:top-auto xl:bottom-0 xl:mt-0 xl:ml-2 w-32 bg-popover border border-border rounded-lg shadow-xl z-50 overflow-hidden py-1 animate-in fade-in zoom-in-95 duration-100">
+                             {years.slice(3).map((year) => (
+                                 <button
+                                     key={year}
+                                     onClick={() => {
+                                         setSelectedYear(year)
+                                         setShowDropdown(false)
+                                     }}
+                                     className={cn(
+                                         "w-full text-left px-4 py-2 text-sm transition-colors",
+                                         selectedYear === year 
+                                            ? "bg-accent text-accent-foreground font-medium" 
+                                            : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                                     )}
+                                 >
+                                     {year}
+                                 </button>
+                             ))}
+                         </div>
+                     )}
+                 </div>
+             )}
+        </div>
+
+        {/* Global Tooltip */}
+        {hoveredDay && typeof document !== 'undefined' && createPortal(
+            <div 
+                className="fixed pointer-events-none z-[100] px-3 py-2 bg-popover border border-border text-popover-foreground text-xs rounded-lg shadow-xl font-medium transition-opacity duration-75"
+                style={{ 
+                    // Position slightly above the cursor
+                    left: hoveredDay.x, 
+                    top: hoveredDay.y - 12, 
+                    transform: 'translate(-50%, -100%)' 
+                }}
+            >
+                <div className="flex items-center gap-2 whitespace-nowrap">
+                        <span className="text-muted-foreground font-normal">{new Date(hoveredDay.day.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                </div>
+                <div className="mt-0.5 text-sm font-semibold whitespace-nowrap">
+                    {hoveredDay.day.count} contributions
+                </div>
+            </div>,
+            document.body
+        )}
     </div>
   )
 }

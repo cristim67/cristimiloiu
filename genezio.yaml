@@ -1,0 +1,10 @@
+name: portfolio
+region: eu-central-1
+yamlVersion: 2
+nextjs:
+    path: .
+    packageManager: npm
+    scripts:
+        deploy:
+            - npm install --legacy-peer-deps
+            - npm run build
