@@ -17,7 +17,7 @@ export default function Icon() {
       // ImageResponse JSX element
       <div
         style={{
-          fontSize: 24,
+          fontSize: 16,
           background: "black",
           width: "100%",
           height: "100%",
@@ -30,7 +30,7 @@ export default function Icon() {
           fontWeight: 600,
         }}
       >
-        M
+        CM
       </div>
     ),
     // ImageResponse options

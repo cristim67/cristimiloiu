@@ -1,0 +1,230 @@
+\documentclass[letterpaper,10pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\input{glyphtounicode}
+
+% Font options
+\usepackage[sfdefault]{roboto}  % Sans-serif font
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section formatting
+\titleformat{\section}{\Large\bfseries\scshape\raggedright}{}{0em}{}[\titlerule]
+
+% Ensure PDF is machine readable
+\pdfgentounicode=1
+
+% Custom commands
+\newcommand{\resumeItem}[1]{\item\small{#1}}
+\newcommand{\resumeSubheading}[4]{
+\vspace{-1pt}\item
+  \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & #2 \\
+    \textit{#3} & \textit{#4} \\
+  \end{tabular*}\vspace{-7pt}
+}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\newcommand{\resumeSubHeadingList}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+
+\begin{document}
+
+\begin{center}
+  \textbf{\Huge Cristi Miloiu} \\[5pt]
+  \small \faPhone\ (+40) 791 423 994 \enspace $|$ \enspace \faEnvelope\ \href{mailto:miloiuc4@gmail.com}{miloiuc4@gmail.com} \enspace $|$ \enspace
+  \faGlobe\ \href{https://cristimiloiu.com}{cristimiloiu.com} \enspace $|$ \enspace
+  \faLinkedin\ \href{https://linkedin.com/in/cristi-miloiu-3a174a267}{LinkedIn} \enspace $|$ \enspace
+  \faGithub\ \href{https://github.com/cristim67}{GitHub}
+\end{center}
+
+\section{Technical Skills}
+\resumeSubHeadingList
+  \resumeItem{\textbf{AI \& Backend}: LLMs, AI Agents, RAG, Langfuse, Python, FastAPI, PostgreSQL, MongoDB, Redis}
+  \resumeItem{\textbf{Web \& Cloud}: TypeScript, React, Next.js, Tailwind CSS, Docker, AWS, Grafana, Cloudflare}
+  \resumeItem{\textbf{Dev Tools \& Productivity}: Jira, Confluence, Slack, GitHub, Postman, TablePlus, Cursor}
+\resumeSubHeadingListEnd
+
+\section{Experience}
+\resumeSubHeadingList
+  \resumeSubheading
+      {Software Engineer}{Sept 2023 -- Present}
+      {\href{https://genezio.com/}{Genezio}}{Bucharest, Romania}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Core member of the team that secured a \textbf{\texteuro2M pre-seed round} for a \textbf{serverless cloud platform}, later pivoting to develop \textbf{LLM brand visibility} and \textbf{enterprise AI agent testing} solutions.}
+          \resumeItem{\textbullet\ \textbf{Owner \& Maintainer} of the backend and agents codebase, delivering \textbf{5000+ contributions} last year.}
+          \resumeItem{\textbullet\ Architected the \textbf{RBAC system using Casbin} to handle secure permissions and multi-account management.}
+          \resumeItem{\textbullet\ Built the \textbf{daily simulation engine} that executes user-defined scenarios and captures comprehensive interaction data.}
+
+          \resumeItem{\textbullet\ Implemented the \textbf{Metrics infrastructure} with robust \textbf{caching} for real-time analytics.}
+          \resumeItem{\textbullet\ Engineered \textbf{Red/Blue Team Agents} to simulate adversarial attacks and automate functional testing.}
+          \resumeItem{\textbullet\ Orchestrated \textbf{platform releases}, ensuring stability and quality assurance in production.}
+          \resumeItem{\textbullet\ Led \textbf{interviewing, onboarding, and mentorship} for interns/juniors, enforcing high code quality standards.}
+          \resumeItem{\textbullet\ \textbf{Technical Skills}: Python, FastAPI, PostgreSQL, MongoDB, Redis, React, Tailwind CSS, AWS, S3, Langfuse, Grafana, Docker}
+      \resumeSubHeadingListEnd
+  \resumeSubheading
+      {Full Stack Intern}{June 2023 -- August 2023}
+      {\href{https://genezio.com/}{Genezio}}{Bucharest, Romania}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Enabled \textbf{CLI deployment} for \textbf{Lambda Functions} and \textbf{FastAPI}, directly streamlining developer workflows.}
+          \resumeItem{\textbullet\ Migrated \textbf{Next.js deployment} from OpenNext to a native solution, improving scalability and simplicity.}
+          \resumeItem{\textbullet\ Designed a \textbf{RAG system} using OpenAI \& LangChain for context-aware Q\&A on company documentation.}
+          \resumeItem{\textbullet\ Integrated the system into a \textbf{Discord bot} with \textbf{automated CI/CD} workflows using CircleCI.}
+          \resumeItem{\textbullet\ \textbf{Technical Skills}: Python, LangChain, OpenAI API, Next.js, FastAPI, Discord API, CircleCI}
+      \resumeSubHeadingListEnd
+  \resumeSubheading
+      {Technical Coordinator}{Oct 2022 -- July 2024}
+      {\href{https://lsebucuresti.org/}{League of Electronics Students (LSE)}}{Bucharest, Romania}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Managed the \textbf{IT Department}, training volunteers in \textbf{web development fundamentals} and \textbf{GitHub} workflows.}
+          \resumeItem{\textbullet\ Delivered key web applications: \textbf{LSE București} (organization website), \textbf{APV} (charitable cross-country platform, \textbf{500+ users}), \textbf{BBETTI} (voting platform, \textbf{1,000+ users}), and \textbf{Laundry Reservation} (\textbf{700+ users}).}
+          \resumeItem{\textbullet\ \textbf{Technical Skills}: JavaScript, TypeScript, React, Node.js, GitHub, Tailwind CSS, PostgreSQL, Sequelize}
+      \resumeSubHeadingListEnd
+  \resumeSubheading
+      {System Engineering Intern}{July 2022 -- Sept 2022}
+      {\href{https://www.huawei.com/}{Huawei Enterprise GSC}}{Bucharest, Romania}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Worked with enterprise storage protocols (SAN/NAS, RAID) and Linux server administration.}
+          \resumeItem{\textbullet\ \textbf{Technical Skills}: Linux, SAN/NAS, RAID, Enterprise Server Administration}
+      \resumeSubHeadingListEnd
+\resumeSubHeadingListEnd
+
+\section{Education}
+\resumeSubHeadingList
+  \resumeSubheading
+      {\href{https://upb.ro/en/}{National University of Science and Technology Politehnica Bucharest}}{Bucharest, Romania}
+      {M.Eng. in Information and Computing Systems Engineering}{Oct 2025 -- Present}
+      \resumeSubHeadingList
+          \resumeItem{\small{Faculty of Electronics, Telecommunications and Information Technology}}
+          \resumeItem{\textbullet\ \textbf{Dissertation (WIP)}: Information Visibility in the Age of LLMs}
+      \resumeSubHeadingListEnd
+  \resumeSubheading
+      {\href{https://upb.ro/en/}{National University of Science and Technology Politehnica Bucharest}}{Bucharest, Romania}
+      {B.Sc. in Computer Science}{Oct 2021 -- July 2025}
+      \resumeSubHeadingList
+          \resumeItem{\small{Faculty of Electronics, Telecommunications and Information Technology}}
+          \resumeItem{\textbullet\ \textbf{Bachelor Thesis}: \href{https://github.com/cristim67/bachelor-project}{Automatic Generation of REST and GraphQL API Interfaces using LLMs}}
+      \resumeSubHeadingListEnd
+\resumeSubHeadingListEnd
+
+\section{Projects}
+\resumeSubHeadingList
+    \resumeSubheading
+      {\href{https://github.com/cristim67/bachelor-project}{Bachelor Project - AI Agent System}}{May 2024}
+      {Python, FastAPI, React, MongoDB, Gemini, AWS, Docker}{}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Built a \textbf{multi-agent system} using \textbf{Google Gemini} and an \textbf{LLM Provider Factory} to generate REST/GraphQL APIs.}
+          \resumeItem{\textbullet\ Architected the backend with \textbf{FastAPI} and \textbf{MongoDB}, employing \textbf{Agent Factory patterns} and \textbf{SSE} for real-time streaming.}
+          \resumeItem{\textbullet\ Integrated \textbf{automated deployments} via \textbf{Genezio} and \textbf{Langfuse} for observability and cost analysis.}
+      \resumeSubHeadingListEnd
+
+    \resumeSubheading
+      {\href{https://cristimiloiu.com/}{Personal Portfolio Website}}{Oct 2024}
+      {Next.js, React, Tailwind CSS, Vercel, Cloudflare}{}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Developed a modern, high-performance \textbf{portfolio website} using \textbf{Next.js} and \textbf{Tailwind CSS}.}
+          \resumeItem{\textbullet\ Optimized for speed and security, deployed on \textbf{Vercel} with \textbf{Cloudflare} for DNS management.}
+      \resumeSubHeadingListEnd
+
+    \resumeSubheading
+      {\href{https://github.com/cristim67/audio-analysis-platform}{Audio Analysis Platform}}{Jan 2024}
+      {Hardware, ESP32, FastAPI, React, WebSocket, Signal Processing}{}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Engineered a \textbf{hardware system} integrating \textbf{ESP32}, \textbf{Pre-Amp}, and \textbf{Microphone} for real-time audio processing.}
+          \resumeItem{\textbullet\ Implemented \textbf{FFT analysis}, digital filtering, and streamed data via \textbf{WebSockets} to a React dashboard.}
+      \resumeSubHeadingListEnd
+
+    \resumeSubheading
+      {\href{https://github.com/cristim67/aspicv-project}{Facial Emotion Recognition}}{Jan 2024}
+      {Python, PyTorch, Vision Transformers (ViT), Streamlit, Docker}{}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Built a high-performance FER system using \textbf{Vision Transformers (ViT)} fine-tuned on a custom dataset.}
+          \resumeItem{\textbullet\ Implemented advanced optimization techniques: \textbf{Mixup}, \textbf{Label Smoothing}, and \textbf{Test Time Augmentation (TTA)}.}
+      \resumeSubHeadingListEnd
+
+    \resumeSubheading
+      {\href{https://github.com/cristim67/tapms-project}{Comparative Modeling Environments}}{Dec 2023}
+      {Rust, Go, C++, Python, Rayon, OpenMP, NumPy}{}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Simulated fire propagation using \textbf{Cellular Automata} to benchmark High Performance Computing (HPC) approaches.}
+          \resumeItem{\textbullet\ Compared parallelism models: \textbf{Rayon (Rust)}, \textbf{Goroutines (Go)}, \textbf{std::thread (C++)}, and \textbf{NumPy (Python)}.}
+      \resumeSubHeadingListEnd
+\resumeSubHeadingListEnd
+
+\section{Awards}
+\resumeSubHeadingList
+  \resumeSubheading
+      {3rd Place -- Scientific Communications Session: Bachelor Thesis}{May 2025}
+      {National University of Science and Technology Politehnica Bucharest}{}
+      \resumeSubHeadingList
+           \resumeItem{\textbullet\ Awarded for the final implementation of the ``Automatic Generation of REST and GraphQL API Interfaces using LLMs''.}
+      \resumeSubHeadingListEnd
+
+  \resumeSubheading
+      {4th Place -- Scientific Communications Session: API in Seconds}{May 2024}
+      {National University of Science and Technology Politehnica Bucharest}{}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Awarded for the initial prototype of the AI-driven backend generation platform.}
+      \resumeSubHeadingListEnd
+
+  \resumeSubheading
+      {1st Place -- Electron Hackathon: Electrify the Campus}{May 2023}
+      {LSE Bucharest, Romania}{}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Developed a \textbf{Smart Campus parking solution} using \textbf{YOLOv5} for license plate detection and \textbf{EasyOCR} for text extraction.}
+          \resumeItem{\textbullet\ Integrated an automated barrier system using \textbf{ESP32} and a MySQL database for real-time access control.}
+      \resumeSubHeadingListEnd
+
+  \resumeSubheading
+      {2nd Place -- Scientific Communications Session}{May 2023}
+      {National University of Science and Technology Politehnica Bucharest}{}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Built a stolen car finding mobile app using \textbf{YOLOv3} and color transformation algorithms for license plate recognition.}
+          \resumeItem{\textbullet\ Implemented specific image processing pipelines with \textbf{OpenCV} and geolocation tracking via email alerts.}
+      \resumeSubHeadingListEnd
+\resumeSubHeadingListEnd
+
+\section{Volunteering}
+\resumeSubHeadingList
+  \resumeSubheading
+      {Board Member}{Oct 2023 -- Present}
+      {League of Electronics Students (LSE)}{Bucharest, Romania}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Representing students in the Board of Members, ensuring their concerns are addressed in decision-making processes.}
+          \resumeItem{\textbullet\ Developed \textbf{Risk Management} and strategic planning skills through organizational leadership.}
+      \resumeSubHeadingListEnd
+      
+  \resumeSubheading
+      {Student Representative}{Dec 2023 -- Present}
+      {National University of Science and Technology Politehnica Bucharest}{Bucharest, Romania}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Acted as a bridge between the student body and faculty administration, advocating for academic improvements.}
+      \resumeSubHeadingListEnd
+\resumeSubHeadingListEnd
+
+\end{document}

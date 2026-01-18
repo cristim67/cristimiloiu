@@ -15,6 +15,14 @@ interface Job {
   link?: string
 }
 
+interface Project {
+  year: string
+  title: string
+  description: string
+  tech: string[]
+  link?: string
+}
+
 export default function Home() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
@@ -70,34 +78,75 @@ export default function Home() {
 
   const jobs: Job[] = [
     {
-      year: "2023 — Present",
+      year: "Sept 2023 — Present",
       role: "Software Engineer",
       company: "Genezio",
-      description: "Architected and implemented key platform features including AI agent simulation, serverless deployment automation, and a custom authentication system.",
+      description: "Core member of the team that secured a €2M pre-seed round. Owner & Maintainer of the backend and agents codebase (5000+ contributions). Architected the RBAC system, simulation engine, and metrics infrastructure. Engineered Red/Blue Team Agents and led mentorship.",
       link: "/work/genezio",
-      tech: ["FastAPI", "Next.js", "AWS", "Remix", "NestJS"],
+      tech: ["Python", "FastAPI", "PostgreSQL", "MongoDB", "Redis", "React", "AWS", "Langfuse", "Docker"],
     },
     {
-      year: "2023",
+      year: "June 2023 — Aug 2023",
       role: "Full Stack Intern",
       company: "Genezio",
-      description: "Developed an LLM-powered system for context-specific responses and integrated it into a Discord bot with automated CI/CD pipelines.",
-      tech: ["Python", "LLM", "Discord Bot", "CircleCI"],
+      description: "Enabled CLI deployment for Lambda/FastAPI and migrated Next.js deployment to native solution. Designed RAG system using OpenAI & LangChain integrated into a Discord bot with automated CI/CD.",
+      link: "/work/genezio-intern",
+      tech: ["Python", "LangChain", "OpenAI API", "Next.js", "FastAPI", "CircleCI"],
     },
     {
-      year: "2022 — 2024",
+      year: "Oct 2022 — July 2024",
       role: "Technical Coordinator",
       company: "League of Electronics Students",
-      description: "Coordinated a team of 50+ members, managing web applications serving 1000+ users. Led cloud infrastructure setup and mentored junior developers.",
-      tech: ["MERN Stack", "Cloud", "Leadership"],
+      description: "Managed the IT Department (50+ members). Delivered key web applications serving 1000+ users, including the organization website and charitable platforms.",
+      link: "/work/lse",
+      tech: ["JavaScript", "TypeScript", "React", "Node.js", "GitHub", "Tailwind CSS", "PostgreSQL"],
     },
     {
-      year: "2022",
+      year: "July 2022 — Sept 2022",
       role: "System Engineering Intern",
       company: "Huawei Enterprise GSC",
-      description: "Gained expertise in server protocols (x86) and storage systems (SAN and NAS). Developed proficiency in Linux and bash commands.",
-      tech: ["Linux", "Bash", "Storage Systems"],
+      description: "Worked with enterprise storage protocols (SAN/NAS, RAID) and Linux server administration.",
+      link: "/work/huawei",
+      tech: ["Linux", "SAN/NAS", "RAID", "Server Admin"],
     },
+  ]
+
+  const projects: Project[] = [
+    {
+      year: "May 2024",
+      title: "Bachelor Project - AI Agent System",
+      description: "Built a multi-agent system using Google Gemini to generate REST/GraphQL APIs. Architected backend with FastAPI, MongoDB, and SSE.",
+      tech: ["Python", "FastAPI", "React", "MongoDB", "Gemini", "AWS", "Docker"],
+      link: "/projects/bachelor-project"
+    },
+    {
+      year: "Oct 2024",
+      title: "Personal Portfolio Website",
+      description: "Developed a modern, high-performance portfolio website using Next.js and Tailwind CSS. Optimized for speed and security on Vercel.",
+      tech: ["Next.js", "React", "Tailwind CSS", "Vercel", "Cloudflare"],
+      link: "/projects/portfolio"
+    },
+    {
+      year: "Jan 2024",
+      title: "Audio Analysis Platform",
+      description: "Engineered a hardware system integrating ESP32 and Microphone for real-time audio processing (FFT) and visualization via WebSockets.",
+      tech: ["ESP32", "FastAPI", "React", "WebSocket", "Signal Processing"],
+      link: "/projects/audio-analysis"
+    },
+    {
+      year: "Jan 2024",
+      title: "Facial Emotion Recognition",
+      description: "Built a high-performance FER system using Vision Transformers (ViT) fine-tuned on a custom dataset with advanced optimization techniques.",
+      tech: ["Python", "PyTorch", "ViT", "Streamlit", "Docker"],
+      link: "/projects/facial-emotion-recognition"
+    },
+    {
+      year: "Dec 2023",
+      title: "Comparative Modeling Environments",
+      description: "Simulated fire propagation using Cellular Automata to benchmark High Performance Computing (HPC) approaches.",
+      tech: ["Rust", "Go", "C++", "Python", "Rayon", "OpenMP"],
+      link: "/projects/comparative-modeling"
+    }
   ]
 
   return (
@@ -108,7 +157,7 @@ export default function Home() {
 
       <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
         <div className="flex flex-col gap-4">
-          {["intro", "github", "work", "thoughts", "connect"].map((section) => (
+          {["intro", "github", "work", "projects", "thoughts", "connect"].map((section) => (
             <button
               key={section}
               onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
@@ -217,6 +266,20 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
+
+                <div>
+                  {/* <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">Dev Tools & Productivity</div>
+                  <div className="flex flex-wrap gap-2">
+                    {["Jira", "Confluence", "Slack", "GitHub", "Postman", "TablePlus", "Cursor"].map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div> */}
+                </div>
               </div>
               </div>
             </div>
@@ -317,9 +380,75 @@ export default function Home() {
         </section>
 
         <section
-          id="thoughts"
+          id="projects"
           ref={(el) => {
             sectionsRef.current[3] = el
+          }}
+          className="min-h-screen py-20 sm:py-32 opacity-0"
+        >
+          <div className="space-y-12 sm:space-y-16">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+              <h2 className="text-3xl sm:text-4xl font-light">Projects</h2>
+              <div className="text-sm text-muted-foreground font-mono">2023 — {new Date().getFullYear()}</div>
+            </div>
+
+            <div className="space-y-8 sm:space-y-12">
+              {projects.map((project, index) => (
+                <div
+                  key={index}
+                  className="group relative flex flex-col gap-4 py-8 border-b border-border/50 hover:border-border transition-colors duration-500"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                      <h3 className="text-xl font-medium text-foreground">{project.title}</h3>
+                      <div className="text-sm text-muted-foreground font-mono mt-1">
+                        {project.year}
+                      </div>
+                    </div>
+                    {project.link && (
+                      <Link 
+                        href={project.link}
+                        className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group/link after:absolute after:inset-0"
+                      >
+                        <ArrowUpRight className="w-4 h-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                      </Link>
+                    )}
+                  </div>
+                  
+                  <div className="text-muted-foreground leading-relaxed max-w-3xl">
+                    {project.description}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2.5 py-0.5 text-xs font-medium text-muted-foreground/80 bg-secondary/30 rounded-full border border-transparent group-hover:border-border transition-colors duration-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {project.link && (
+                     <Link 
+                       href={project.link}
+                       className="sm:hidden inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group/link mt-1 after:absolute after:inset-0"
+                     >
+                       View Project
+                       <ArrowUpRight className="w-4 h-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                     </Link>
+                   )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="thoughts"
+          ref={(el) => {
+            sectionsRef.current[4] = el
           }}
           className="min-h-screen py-20 sm:py-32 opacity-0"
         >
@@ -329,33 +458,52 @@ export default function Home() {
             <div className="grid gap-6 sm:gap-8">
               {[
                 {
-                  title: "Bachelor in Computer Science",
-                  excerpt: "Faculty of Electronics, Telecommunications and Information Technology. Courses: Data Structures, Algorithms, OOP, AI Systems Engineering.",
+                  title: "M.Eng. in Information Systems Engineering",
+                  excerpt: "National University of Science and Technology Politehnica Bucharest. Dissertation (WIP): Information Visibility in the Age of LLMs.",
+                  date: "2025 - Present",
+                  readTime: "UPB",
+                  href: "/education/master"
+                },
+                {
+                  title: "B.Sc. in Computer Science",
+                  excerpt: "National University of Science and Technology Politehnica Bucharest. Bachelor Thesis: Automatic Generation of REST and GraphQL API Interfaces using LLMs.",
                   date: "2021 - 2025",
                   readTime: "UPB",
+                  href: "/education/bachelor"
+                },
+                {
+                  title: "3rd Place - Bachelor Thesis",
+                  excerpt: "Awarded for the final implementation of the 'Automatic Generation of REST and GraphQL API Interfaces using LLMs' at the Scientific Communications Session.",
+                  date: "May 2025",
+                  readTime: "Award",
+                  href: "/awards/bachelor-thesis"
+                },
+                {
+                  title: "4th Place - API in Seconds",
+                  excerpt: "Awarded for the initial prototype of the AI-driven backend generation platform at the Scientific Communications Session.",
+                  date: "May 2024",
+                  readTime: "Award",
+                  href: "/awards/api-in-seconds"
                 },
                 {
                   title: "1st Place - Electron Hackathon",
-                  excerpt: "Won first place at the Electron Hackathon organized by LSE (League of Electronics Students). Electrify the Campus edition.",
-                  date: "Award",
-                  readTime: "LSE",
+                  excerpt: "Won first place at the Electron Hackathon (Electrify the Campus). Developed a Smart Campus parking solution using YOLOv5 and EasyOCR.",
+                  date: "May 2023",
+                  readTime: "Award",
+                  href: "/awards/electron-hackathon"
                 },
                 {
                   title: "2nd Place - Scientific Communications",
-                  excerpt: "Awarded for the project 'Number plate recognition' at the Scientific Communications Session 2023 at ETTI, UPB.",
-                  date: "2023",
-                  readTime: "CS Session",
-                },
-                {
-                  title: "4th Place - Scientific Communications",
-                  excerpt: "Awarded for the project 'API in seconds' at the Scientific Communications Session 2024 at ETTI, UPB.",
-                  date: "2024",
-                  readTime: "CS Session",
+                  excerpt: "Awarded for the project 'Number plate recognition'. Built a stolen car finding mobile app using YOLOv3 and color transformation algorithms.",
+                  date: "May 2023",
+                  readTime: "Award",
+                  href: "/awards/scientific-communications-2023"
                 },
               ].map((post, index) => (
-                <article
+                <Link
+                  href={post.href || "#"}
                   key={index}
-                  className="group p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500 hover:shadow-lg cursor-pointer"
+                  className="group block p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500 hover:shadow-lg cursor-pointer"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
@@ -363,13 +511,14 @@ export default function Home() {
                       <span>{post.readTime}</span>
                     </div>
 
-                    <h3 className="text-lg sm:text-xl font-medium group-hover:text-muted-foreground transition-colors duration-300">
+                    <h3 className="text-xl font-medium group-hover:text-foreground transition-colors group-hover:underline decoration-1 underline-offset-4">
                       {post.title}
                     </h3>
-
-                    <p className="text-muted-foreground leading-relaxed">{post.excerpt}</p>
+                    <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                        {post.excerpt}
+                    </p>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </div>
@@ -378,7 +527,7 @@ export default function Home() {
         <section
           id="connect"
           ref={(el) => {
-            sectionsRef.current[4] = el
+            sectionsRef.current[5] = el
           }}
           className="py-20 sm:py-32 opacity-0"
         >
