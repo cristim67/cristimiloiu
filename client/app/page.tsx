@@ -524,11 +524,71 @@ export default function Home() {
           </div>
         </section>
 
+
+        <section
+          id="volunteering"
+          ref={(el) => {
+            if (el) sectionsRef.current[5] = el;
+          }}
+          className="min-h-screen py-20 sm:py-32 opacity-0"
+        >
+          <div className="space-y-12 sm:space-y-16">
+            <h2 className="text-3xl sm:text-4xl font-light">Volunteering</h2>
+
+            <div className="grid gap-6 sm:gap-8">
+              {[
+                {
+                   title: "Mentor - Innovation Labs",
+                   description: "Mentoring early-stage startups on technical architecture, product scalability, and MVP development strategies.",
+                   date: "2025 - Present",
+                   type: "Mentorship"
+                },
+                {
+                   title: "Mentor- The Bucharest Hackathon",
+                   description: "Providing technical guidance and evaluating projects for one of Romania's largest hackathons.",
+                   date: "April 2024 - Present",
+                   type: "Mentorship"
+                },
+                {
+                   title: "Board Member - LSE",
+                   description: "Representing students in the Board of Members, ensuring their concerns are addressed in decision-making processes. Developed Risk Management and strategic planning skills.",
+                   date: "Oct 2023 - 2024",
+                   type: "Leadership"
+                },
+                {
+                   title: "Student Representative",
+                   description: "Acted as a bridge between the student body and faculty administration at National University of Science and Technology Politehnica Bucharest.",
+                   date: "Dec 2022 - 2024",
+                   type: "Leadership"
+                }
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="group block p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500 hover:shadow-lg"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
+                      <span>{item.date}</span>
+                      <span>{item.type}</span>
+                    </div>
+
+                    <h3 className="text-xl font-medium text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                        {item.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
         <section
           id="connect"
-          ref={(el) => {
-            sectionsRef.current[5] = el
-          }}
+           ref={(el) => {
+             if (el) sectionsRef.current[6] = el;
+           }}
           className="py-20 sm:py-32 opacity-0"
         >
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
