@@ -35,6 +35,7 @@ export function GitHubContributions({ username = "cristim67" }: { username?: str
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true)
       try {
         const [allResponse, lastResponse] = await Promise.all([
              fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=all`),
@@ -176,8 +177,59 @@ export function GitHubContributions({ username = "cristim67" }: { username?: str
 
   if (loading) {
     return (
-      <div className="animate-pulse space-y-4">
-        <div className="h-[200px] w-full bg-muted/10 rounded-xl" />
+      <div className="w-full flex flex-col xl:flex-row gap-8 animate-pulse">
+        {/* Skeleton Column 1: Header + Grid */}
+        <div className="flex-1 min-w-0">
+          {/* Header Skeleton */}
+          <div className="mb-8 space-y-2">
+             <div className="h-8 w-64 bg-muted/20 rounded" />
+          </div>
+
+          {/* Grid Skeleton */}
+          <div className="overflow-x-auto scrollbar-hide pb-2">
+            <div className="min-w-max">
+                {/* Month Labels Skeleton */}
+                <div className="flex mb-3">
+                  <div className="w-8 shrink-0" />
+                  <div className="flex gap-12">
+                     {[...Array(12)].map((_, i) => (
+                        <div key={i} className="h-4 w-6 bg-muted/20 rounded" />
+                     ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                    {/* Weekday Labels Skeleton */}
+                    <div className="flex flex-col gap-[4px] py-[2px] w-8 pt-[14px]">
+                        <div className="h-[10px] w-6 bg-muted/20 rounded" />
+                        <div className="h-[10px]" />
+                        <div className="h-[10px] w-6 bg-muted/20 rounded" />
+                        <div className="h-[10px]" />
+                        <div className="h-[10px] w-6 bg-muted/20 rounded" />
+                    </div>
+                    
+                    {/* Grid Cells Skeleton */}
+                    <div className="flex gap-[4px]">
+                        {[...Array(53)].map((_, colIndex) => (
+                            <div key={colIndex} className="flex flex-col gap-[4px]">
+                                {[...Array(7)].map((_, rowIndex) => (
+                                    <div key={rowIndex} className="w-[10px] h-[10px] bg-muted/10 rounded-[2px]" />
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Skeleton Column 2: Buttons */}
+        <div className="flex xl:flex-col flex-row flex-wrap gap-2 xl:w-32 shrink-0 content-start">
+            <div className="h-9 w-full bg-muted/20 rounded-lg" />
+            <div className="h-9 w-full bg-muted/20 rounded-lg" />
+            <div className="h-9 w-full bg-muted/20 rounded-lg" />
+            <div className="h-9 w-full bg-muted/20 rounded-lg" />
+        </div>
       </div>
     )
   }
