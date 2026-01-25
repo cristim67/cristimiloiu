@@ -41,8 +41,13 @@ export default function Home() {
         // Sum contributions for the last year
         const total = data.contributions.reduce((acc: number, curr: any) => acc + curr.count, 0)
         
-        // Round to nearest 500
-        const roundedTotal = Math.round(total / 500) * 500
+        // Round down to nice number
+        let roundedTotal = total
+        if (total >= 1000) {
+           roundedTotal = Math.floor(total / 1000) * 1000
+        } else if (total >= 100) {
+           roundedTotal = Math.floor(total / 100) * 100
+        }
         setTotalContributions(roundedTotal)
       } catch (error) {
         console.error("Failed to fetch contribution count:", error)
