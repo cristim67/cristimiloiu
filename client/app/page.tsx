@@ -1,158 +1,232 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
-import { GitHubContributions } from "@/components/github-contributions"
-import { Github, ArrowUpRight, Linkedin, Globe, Mail, Phone, FileText } from "lucide-react"
-import { useTheme } from "next-themes"
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { GitHubContributions } from "@/components/github-contributions";
+import {
+  Github,
+  ArrowUpRight,
+  Linkedin,
+  Globe,
+  Mail,
+  Phone,
+  FileText,
+} from "lucide-react";
+import { useTheme } from "next-themes";
 
 interface Job {
-  year: string
-  role: string
-  company: string
-  description: string
-  tech: string[]
-  link?: string
+  year: string;
+  role: string;
+  company: string;
+  description: string;
+  tech: string[];
+  link?: string;
 }
 
 interface Project {
-  year: string
-  title: string
-  description: string
-  tech: string[]
-  link?: string
+  year: string;
+  title: string;
+  description: string;
+  tech: string[];
+  link?: string;
 }
 
 export default function Home() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  const [activeSection, setActiveSection] = useState("")
-  const [totalContributions, setTotalContributions] = useState(0)
-  const sectionsRef = useRef<(HTMLElement | null)[]>([])
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [totalContributions, setTotalContributions] = useState(0);
+  const sectionsRef = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
-    setMounted(true)
-    
+    setMounted(true);
+
     async function fetchContributions() {
       try {
-        const response = await fetch("https://github-contributions-api.jogruber.de/v4/cristim67?y=last")
-        const data = await response.json()
-        
+        const response = await fetch(
+          "https://github-contributions-api.jogruber.de/v4/cristim67?y=last",
+        );
+        const data = await response.json();
+
         // Sum contributions for the last year
-        const total = data.contributions.reduce((acc: number, curr: any) => acc + curr.count, 0)
-        
+        const total = data.contributions.reduce(
+          (acc: number, curr: any) => acc + curr.count,
+          0,
+        );
+
         // Round down to nice number
-        let roundedTotal = total
+        let roundedTotal = total;
         if (total >= 1000) {
-           roundedTotal = Math.floor(total / 1000) * 1000
+          roundedTotal = Math.floor(total / 1000) * 1000;
         } else if (total >= 100) {
-           roundedTotal = Math.floor(total / 100) * 100
+          roundedTotal = Math.floor(total / 100) * 100;
         }
-        setTotalContributions(roundedTotal)
+        setTotalContributions(roundedTotal);
       } catch (error) {
-        console.error("Failed to fetch contribution count:", error)
+        console.error("Failed to fetch contribution count:", error);
       }
     }
-    
-    fetchContributions()
-  }, [])
+
+    fetchContributions();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in-up")
-            setActiveSection(entry.target.id)
+            entry.target.classList.add("animate-fade-in-up");
+            setActiveSection(entry.target.id);
           }
-        })
+        });
       },
       { threshold: 0.3, rootMargin: "0px 0px -20% 0px" },
-    )
+    );
 
     sectionsRef.current.forEach((section) => {
-      if (section) observer.observe(section)
-    })
+      if (section) observer.observe(section);
+    });
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark")
-  }
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   const jobs: Job[] = [
     {
-      year: "Sept 2023 — Present",
+      year: "May 2026 — Present",
+      role: "Technical Team Lead",
+      company: "Genezio",
+      description:
+        "Leading the engineering team: organizing delivery, code reviews, prioritizing key features, and aligning with Sales. Running weekly planning and sync meetings; supporting strategic customers when needed.",
+      link: "/work/genezio",
+      tech: [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "MongoDB",
+        "AWS",
+        "OpenAI",
+        "Anthropic",
+        "Langfuse",
+        "Sentry",
+      ],
+    },
+    {
+      year: "Sept 2023 — Apr 2026",
       role: "Software Engineer",
       company: "Genezio",
-      description: "Core member of the team that secured a €2M pre-seed round. Owner & Maintainer of the backend and agents codebase (5000+ contributions). Architected the RBAC system, simulation engine, and metrics infrastructure. Engineered Red/Blue Team Agents and led mentorship.",
-      link: "/work/genezio",
-      tech: ["Python", "FastAPI", "PostgreSQL", "MongoDB", "Redis", "React", "AWS", "Langfuse", "Docker"],
+      description:
+        "Core member of the team that secured a €2M pre-seed round. Owner & Maintainer of the backend and agents codebase (5000+ contributions). Architected RBAC, simulation engine, metrics infrastructure, and Red/Blue Team Agents.",
+      link: "/work/genezio-engineer",
+      tech: [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "MongoDB",
+        "Redis",
+        "React",
+        "AWS",
+        "Langfuse",
+        "Docker",
+      ],
     },
     {
       year: "June 2023 — Aug 2023",
       role: "Full Stack Intern",
       company: "Genezio",
-      description: "Enabled CLI deployment for Lambda/FastAPI and migrated Next.js deployment to native solution. Designed RAG system using OpenAI & LangChain integrated into a Discord bot with automated CI/CD.",
+      description:
+        "Enabled CLI deployment for Lambda/FastAPI and migrated Next.js deployment to native solution. Designed RAG system using OpenAI & LangChain integrated into a Discord bot with automated CI/CD.",
       link: "/work/genezio-intern",
-      tech: ["Python", "LangChain", "OpenAI API", "Next.js", "FastAPI", "CircleCI"],
+      tech: [
+        "Python",
+        "LangChain",
+        "OpenAI API",
+        "Next.js",
+        "FastAPI",
+        "CircleCI",
+      ],
     },
     {
       year: "Oct 2022 — July 2024",
       role: "Technical Coordinator",
       company: "League of Electronics Students",
-      description: "Managed the IT Department (50+ members). Delivered key web applications serving 1000+ users, including the organization website and charitable platforms.",
+      description:
+        "Managed the IT Department (50+ members). Delivered key web applications serving 1000+ users, including the organization website and charitable platforms.",
       link: "/work/lse",
-      tech: ["JavaScript", "TypeScript", "React", "Node.js", "GitHub", "Tailwind CSS", "PostgreSQL"],
+      tech: [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Node.js",
+        "GitHub",
+        "Tailwind CSS",
+        "PostgreSQL",
+      ],
     },
     {
       year: "July 2022 — Sept 2022",
       role: "System Engineering Intern",
       company: "Huawei Enterprise GSC",
-      description: "Worked with enterprise storage protocols (SAN/NAS, RAID) and Linux server administration.",
+      description:
+        "Worked with enterprise storage protocols (SAN/NAS, RAID) and Linux server administration.",
       link: "/work/huawei",
       tech: ["Linux", "SAN/NAS", "RAID", "Server Admin"],
     },
-  ]
+  ];
 
   const projects: Project[] = [
     {
       year: "May 2024",
       title: "Bachelor Project - AI Agent System",
-      description: "Built a multi-agent system using Google Gemini to generate REST/GraphQL APIs. Architected backend with FastAPI, MongoDB, and SSE.",
-      tech: ["Python", "FastAPI", "React", "MongoDB", "Gemini", "AWS", "Docker"],
-      link: "/projects/bachelor-project"
+      description:
+        "Built a multi-agent system using Google Gemini to generate REST/GraphQL APIs. Architected backend with FastAPI, MongoDB, and SSE.",
+      tech: [
+        "Python",
+        "FastAPI",
+        "React",
+        "MongoDB",
+        "Gemini",
+        "AWS",
+        "Docker",
+      ],
+      link: "/projects/bachelor-project",
     },
     {
       year: "Oct 2024",
       title: "Personal Portfolio Website",
-      description: "Developed a modern, high-performance portfolio website using Next.js and Tailwind CSS. Optimized for speed and security on Vercel.",
+      description:
+        "Developed a modern, high-performance portfolio website using Next.js and Tailwind CSS. Optimized for speed and security on Vercel.",
       tech: ["Next.js", "React", "Tailwind CSS", "Vercel", "Cloudflare"],
-      link: "/projects/portfolio"
+      link: "/projects/portfolio",
     },
     {
       year: "Jan 2024",
       title: "Audio Analysis Platform",
-      description: "Engineered a hardware system integrating ESP32 and Microphone for real-time audio processing (FFT) and visualization via WebSockets.",
+      description:
+        "Engineered a hardware system integrating ESP32 and Microphone for real-time audio processing (FFT) and visualization via WebSockets.",
       tech: ["ESP32", "FastAPI", "React", "WebSocket", "Signal Processing"],
-      link: "/projects/audio-analysis"
+      link: "/projects/audio-analysis",
     },
     {
       year: "Jan 2024",
       title: "Facial Emotion Recognition",
-      description: "Built a high-performance FER system using Vision Transformers (ViT) fine-tuned on a custom dataset with advanced optimization techniques.",
+      description:
+        "Built a high-performance FER system using Vision Transformers (ViT) fine-tuned on a custom dataset with advanced optimization techniques.",
       tech: ["Python", "PyTorch", "ViT", "Streamlit", "Docker"],
-      link: "/projects/facial-emotion-recognition"
+      link: "/projects/facial-emotion-recognition",
     },
     {
       year: "Dec 2023",
       title: "Comparative Modeling Environments",
-      description: "Simulated fire propagation using Cellular Automata to benchmark High Performance Computing (HPC) approaches.",
+      description:
+        "Simulated fire propagation using Cellular Automata to benchmark High Performance Computing (HPC) approaches.",
       tech: ["Rust", "Go", "C++", "Python", "Rayon", "OpenMP"],
-      link: "/projects/comparative-modeling"
-    }
-  ]
+      link: "/projects/comparative-modeling",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
@@ -162,16 +236,24 @@ export default function Home() {
 
       <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
         <div className="flex flex-col gap-4">
-          {["intro", "github", "work", "projects", "thoughts", "connect"].map((section) => (
-            <button
-              key={section}
-              onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
-              className={`w-2 h-8 rounded-full transition-all duration-500 ${
-                activeSection === section ? "bg-foreground" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
-              }`}
-              aria-label={`Navigate to ${section}`}
-            />
-          ))}
+          {["intro", "github", "work", "projects", "thoughts", "connect"].map(
+            (section) => (
+              <button
+                key={section}
+                onClick={() =>
+                  document
+                    .getElementById(section)
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                className={`w-2 h-8 rounded-full transition-all duration-500 ${
+                  activeSection === section
+                    ? "bg-foreground"
+                    : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
+                }`}
+                aria-label={`Navigate to ${section}`}
+              />
+            ),
+          )}
         </div>
       </nav>
 
@@ -179,14 +261,16 @@ export default function Home() {
         <header
           id="intro"
           ref={(el) => {
-            sectionsRef.current[0] = el
+            sectionsRef.current[0] = el;
           }}
           className="min-h-screen flex items-center opacity-0"
         >
           <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
             <div className="lg:col-span-3 space-y-6 sm:space-y-8">
               <div className="space-y-3 sm:space-y-2">
-                <div className="text-sm text-muted-foreground font-mono tracking-wider mt-4 sm:mt-0">PORTFOLIO / {new Date().getFullYear()}</div>
+                <div className="text-sm text-muted-foreground font-mono tracking-wider mt-4 sm:mt-0">
+                  PORTFOLIO / {new Date().getFullYear()}
+                </div>
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight">
                   Miloiu
                   <br />
@@ -196,8 +280,16 @@ export default function Home() {
 
               <div className="space-y-6 max-w-lg">
                 <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                  Software Engineer specialized in <span className="text-foreground">AI Agents</span> and <span className="text-foreground">Cloud Architecture</span>, backed by a strong <span className="text-foreground">Full Stack</span> foundation.
-                  Shipped over {totalContributions > 0 ? totalContributions.toLocaleString() : ""} contributions last year.
+                  Software Engineer specialized in{" "}
+                  <span className="text-foreground">AI Agents</span> and{" "}
+                  <span className="text-foreground">Cloud Architecture</span>,
+                  backed by a strong{" "}
+                  <span className="text-foreground">Full Stack</span>{" "}
+                  foundation. Shipped over{" "}
+                  {totalContributions > 0
+                    ? totalContributions.toLocaleString()
+                    : ""}{" "}
+                  contributions last year.
                 </p>
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-sm text-muted-foreground">
@@ -234,58 +326,111 @@ export default function Home() {
 
             <div className="lg:col-span-2 flex flex-col justify-end space-y-6 sm:space-y-8 mt-8 lg:mt-0">
               <div className="space-y-4">
-                <div className="text-sm text-muted-foreground font-mono">CURRENTLY</div>
+                <div className="text-sm text-muted-foreground font-mono">
+                  CURRENTLY
+                </div>
                 <div className="space-y-2">
-                  <div className="text-foreground">Software Engineer</div>
-                  <div className="text-muted-foreground"> <a href="https://genezio.com/" target="_blank" rel="noopener noreferrer">@ Genezio</a></div>
-                  <div className="text-xs text-muted-foreground">June 2023 — Present</div>
+                  <div className="text-foreground">Technical Team Lead</div>
+                  <div className="text-muted-foreground">
+                    {" "}
+                    <a
+                      href="https://genezio.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      @ Genezio
+                    </a>
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    May 2026 — Present
+                  </div>
                 </div>
               </div>
 
               <div className="space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">AI & Backend</div>
-                  <div className="flex flex-wrap gap-2">
-                    {["LLMs", "AI Agents", "RAG", "Langfuse", "Python", "FastAPI", "PostgreSQL", "MongoDB", "Redis"].map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                <div className="space-y-6">
+                  <div>
+                    <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">
+                      AI & Backend
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        "LLMs",
+                        "AI Agents",
+                        "RAG",
+                        "OpenAI",
+                        "Anthropic",
+                        "Langfuse",
+                        "Python",
+                        "FastAPI",
+                        "PostgreSQL",
+                        "MongoDB",
+                        "Redis",
+                        "Neon",
+                      ].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                
-                <div>
-                  <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">Web & Cloud</div>
-                  <div className="flex flex-wrap gap-2">
-                    {["TypeScript", "React", "Next.js", "Tailwind CSS", "Docker", "AWS", "Grafana", "Cloudflare"].map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
 
-                <div>
-                  {/* <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">Dev Tools & Productivity</div>
-                  <div className="flex flex-wrap gap-2">
-                    {["Jira", "Confluence", "Slack", "GitHub", "Postman", "TablePlus", "Cursor"].map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div> */}
+                  <div>
+                    <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">
+                      Web & Cloud
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        "TypeScript",
+                        "React",
+                        "Next.js",
+                        "Tailwind CSS",
+                        "Docker",
+                        "AWS",
+                        "GCP",
+                        "Azure",
+                        "Cloudflare",
+                        "Grafana",
+                        "Sentry",
+                      ].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">
+                      Dev Tools & Productivity
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        "Jira",
+                        "Confluence",
+                        "Slack",
+                        "GitHub",
+                        "Postman",
+                        "Stripe",
+                        "Upstash",
+                        "Cursor",
+                      ].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
           </div>
@@ -294,13 +439,15 @@ export default function Home() {
         <section
           id="github"
           ref={(el) => {
-            sectionsRef.current[1] = el
+            sectionsRef.current[1] = el;
           }}
           className="py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-8 sm:space-y-12">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-              <h2 className="text-3xl sm:text-4xl font-light">GitHub Activity</h2>
+              <h2 className="text-3xl sm:text-4xl font-light">
+                GitHub Activity
+              </h2>
               <Link
                 href="https://github.com/cristim67"
                 target="_blank"
@@ -321,14 +468,16 @@ export default function Home() {
         <section
           id="work"
           ref={(el) => {
-            sectionsRef.current[2] = el
+            sectionsRef.current[2] = el;
           }}
           className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <h2 className="text-3xl sm:text-4xl font-light">Selected Work</h2>
-              <div className="text-sm text-muted-foreground font-mono">2022 — {new Date().getFullYear()}</div>
+              <div className="text-sm text-muted-foreground font-mono">
+                2022 — {new Date().getFullYear()}
+              </div>
             </div>
 
             <div className="space-y-8 sm:space-y-12">
@@ -339,13 +488,16 @@ export default function Home() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div>
-                      <h3 className="text-xl font-medium text-foreground">{job.role}</h3>
+                      <h3 className="text-xl font-medium text-foreground">
+                        {job.role}
+                      </h3>
                       <div className="text-sm text-muted-foreground font-mono mt-1">
-                        {job.company} <span className="text-border mx-2">|</span> {job.year}
+                        {job.company}{" "}
+                        <span className="text-border mx-2">|</span> {job.year}
                       </div>
                     </div>
                     {job.link && (
-                      <Link 
+                      <Link
                         href={job.link}
                         className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group/link after:absolute after:inset-0"
                       >
@@ -353,7 +505,7 @@ export default function Home() {
                       </Link>
                     )}
                   </div>
-                  
+
                   <div className="text-muted-foreground leading-relaxed max-w-3xl">
                     {job.description}
                   </div>
@@ -370,7 +522,7 @@ export default function Home() {
                   </div>
 
                   {job.link && (
-                    <Link 
+                    <Link
                       href={job.link}
                       className="sm:hidden inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group/link mt-1 after:absolute after:inset-0"
                     >
@@ -387,14 +539,16 @@ export default function Home() {
         <section
           id="projects"
           ref={(el) => {
-            sectionsRef.current[3] = el
+            sectionsRef.current[3] = el;
           }}
           className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <h2 className="text-3xl sm:text-4xl font-light">Projects</h2>
-              <div className="text-sm text-muted-foreground font-mono">2023 — {new Date().getFullYear()}</div>
+              <div className="text-sm text-muted-foreground font-mono">
+                2023 — {new Date().getFullYear()}
+              </div>
             </div>
 
             <div className="space-y-8 sm:space-y-12">
@@ -405,13 +559,15 @@ export default function Home() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div>
-                      <h3 className="text-xl font-medium text-foreground">{project.title}</h3>
+                      <h3 className="text-xl font-medium text-foreground">
+                        {project.title}
+                      </h3>
                       <div className="text-sm text-muted-foreground font-mono mt-1">
                         {project.year}
                       </div>
                     </div>
                     {project.link && (
-                      <Link 
+                      <Link
                         href={project.link}
                         className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group/link after:absolute after:inset-0"
                       >
@@ -419,7 +575,7 @@ export default function Home() {
                       </Link>
                     )}
                   </div>
-                  
+
                   <div className="text-muted-foreground leading-relaxed max-w-3xl">
                     {project.description}
                   </div>
@@ -436,14 +592,14 @@ export default function Home() {
                   </div>
 
                   {project.link && (
-                     <Link 
-                       href={project.link}
-                       className="sm:hidden inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group/link mt-1 after:absolute after:inset-0"
-                     >
-                       View Project
-                       <ArrowUpRight className="w-4 h-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
-                     </Link>
-                   )}
+                    <Link
+                      href={project.link}
+                      className="sm:hidden inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group/link mt-1 after:absolute after:inset-0"
+                    >
+                      View Project
+                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                    </Link>
+                  )}
                 </div>
               ))}
             </div>
@@ -453,56 +609,64 @@ export default function Home() {
         <section
           id="thoughts"
           ref={(el) => {
-            sectionsRef.current[4] = el
+            sectionsRef.current[4] = el;
           }}
           className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
-            <h2 className="text-3xl sm:text-4xl font-light">Education & Awards</h2>
+            <h2 className="text-3xl sm:text-4xl font-light">
+              Education & Awards
+            </h2>
 
             <div className="grid gap-6 sm:gap-8">
               {[
                 {
                   title: "M.Eng. in Information Systems Engineering",
-                  excerpt: "National University of Science and Technology Politehnica Bucharest. Dissertation (WIP): Information Visibility in the Age of LLMs.",
+                  excerpt:
+                    "National University of Science and Technology Politehnica Bucharest. Dissertation (WIP): Information Visibility in the Age of LLMs.",
                   date: "2025 - Present",
                   readTime: "UPB",
-                  href: "/education/master"
+                  href: "/education/master",
                 },
                 {
                   title: "B.Sc. in Computer Science",
-                  excerpt: "National University of Science and Technology Politehnica Bucharest. Bachelor Thesis: Automatic Generation of REST and GraphQL API Interfaces using LLMs.",
+                  excerpt:
+                    "National University of Science and Technology Politehnica Bucharest. Bachelor Thesis: Automatic Generation of REST and GraphQL API Interfaces using LLMs.",
                   date: "2021 - 2025",
                   readTime: "UPB",
-                  href: "/education/bachelor"
+                  href: "/education/bachelor",
                 },
                 {
                   title: "3rd Place - Bachelor Thesis",
-                  excerpt: "Awarded for the final implementation of the 'Automatic Generation of REST and GraphQL API Interfaces using LLMs' at the Scientific Communications Session.",
+                  excerpt:
+                    "Awarded for the final implementation of the 'Automatic Generation of REST and GraphQL API Interfaces using LLMs' at the Scientific Communications Session.",
                   date: "May 2025",
                   readTime: "Award",
-                  href: "/awards/bachelor-thesis"
+                  href: "/awards/bachelor-thesis",
                 },
                 {
                   title: "4th Place - API in Seconds",
-                  excerpt: "Awarded for the initial prototype of the AI-driven backend generation platform at the Scientific Communications Session.",
+                  excerpt:
+                    "Awarded for the initial prototype of the AI-driven backend generation platform at the Scientific Communications Session.",
                   date: "May 2024",
                   readTime: "Award",
-                  href: "/awards/api-in-seconds"
+                  href: "/awards/api-in-seconds",
                 },
                 {
                   title: "1st Place - Electron Hackathon",
-                  excerpt: "Won first place at the Electron Hackathon (Electrify the Campus). Developed a Smart Campus parking solution using YOLOv5 and EasyOCR.",
+                  excerpt:
+                    "Won first place at the Electron Hackathon (Electrify the Campus). Developed a Smart Campus parking solution using YOLOv5 and EasyOCR.",
                   date: "May 2023",
                   readTime: "Award",
-                  href: "/awards/electron-hackathon"
+                  href: "/awards/electron-hackathon",
                 },
                 {
                   title: "2nd Place - Scientific Communications",
-                  excerpt: "Awarded for the project 'Number plate recognition'. Built a stolen car finding mobile app using YOLOv3 and color transformation algorithms.",
+                  excerpt:
+                    "Awarded for the project 'Number plate recognition'. Built a stolen car finding mobile app using YOLOv3 and color transformation algorithms.",
                   date: "May 2023",
                   readTime: "Award",
-                  href: "/awards/scientific-communications-2023"
+                  href: "/awards/scientific-communications-2023",
                 },
               ].map((post, index) => (
                 <Link
@@ -520,7 +684,7 @@ export default function Home() {
                       {post.title}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                        {post.excerpt}
+                      {post.excerpt}
                     </p>
                   </div>
                 </Link>
@@ -528,7 +692,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
 
         <section
           id="volunteering"
@@ -543,29 +706,33 @@ export default function Home() {
             <div className="grid gap-6 sm:gap-8">
               {[
                 {
-                   title: "Mentor - Innovation Labs",
-                   description: "Mentoring early-stage startups on technical architecture, product scalability, and MVP development strategies.",
-                   date: "2025 - Present",
-                   type: "Mentorship"
+                  title: "Mentor - Innovation Labs",
+                  description:
+                    "Mentoring early-stage startups on technical architecture, product scalability, and MVP development strategies.",
+                  date: "2025 - Present",
+                  type: "Mentorship",
                 },
                 {
-                   title: "Mentor- The Bucharest Hackathon",
-                   description: "Providing technical guidance and evaluating projects for one of Romania's largest hackathons.",
-                   date: "April 2024 - Present",
-                   type: "Mentorship"
+                  title: "Mentor- The Bucharest Hackathon",
+                  description:
+                    "Providing technical guidance and evaluating projects for one of Romania's largest hackathons.",
+                  date: "April 2024 - Present",
+                  type: "Mentorship",
                 },
                 {
-                   title: "Board Member - LSE",
-                   description: "Representing students in the Board of Members, ensuring their concerns are addressed in decision-making processes. Developed Risk Management and strategic planning skills.",
-                   date: "Oct 2023 - 2024",
-                   type: "Leadership"
+                  title: "Board Member - LSE",
+                  description:
+                    "Representing students in the Board of Members, ensuring their concerns are addressed in decision-making processes. Developed Risk Management and strategic planning skills.",
+                  date: "Oct 2023 - 2024",
+                  type: "Leadership",
                 },
                 {
-                   title: "Student Representative",
-                   description: "Acted as a bridge between the student body and faculty administration at National University of Science and Technology Politehnica Bucharest.",
-                   date: "Dec 2022 - 2024",
-                   type: "Leadership"
-                }
+                  title: "Student Representative",
+                  description:
+                    "Acted as a bridge between the student body and faculty administration at National University of Science and Technology Politehnica Bucharest.",
+                  date: "Dec 2022 - 2024",
+                  type: "Leadership",
+                },
               ].map((item, index) => (
                 <div
                   key={index}
@@ -581,7 +748,7 @@ export default function Home() {
                       {item.title}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                        {item.description}
+                      {item.description}
                     </p>
                   </div>
                 </div>
@@ -591,9 +758,9 @@ export default function Home() {
         </section>
         <section
           id="connect"
-           ref={(el) => {
-             if (el) sectionsRef.current[6] = el;
-           }}
+          ref={(el) => {
+            if (el) sectionsRef.current[6] = el;
+          }}
           className="py-20 sm:py-32 opacity-0"
         >
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
@@ -602,7 +769,8 @@ export default function Home() {
 
               <div className="space-y-6">
                 <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                  Always interested in new opportunities, collaborations, and conversations about technology and design.
+                  Always interested in new opportunities, collaborations, and
+                  conversations about technology and design.
                 </p>
 
                 <div className="space-y-4">
@@ -610,7 +778,9 @@ export default function Home() {
                     href="mailto:miloiuc4@gmail.com"
                     className="group flex items-center gap-3 text-foreground hover:text-muted-foreground transition-colors duration-300"
                   >
-                    <span className="text-base sm:text-lg">miloiuc4@gmail.com</span>
+                    <span className="text-base sm:text-lg">
+                      miloiuc4@gmail.com
+                    </span>
                     <Mail className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
                   </Link>
                   <div className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors duration-300">
@@ -622,14 +792,36 @@ export default function Home() {
             </div>
 
             <div className="space-y-6 sm:space-y-8">
-              <div className="text-sm text-muted-foreground font-mono">ELSEWHERE</div>
+              <div className="text-sm text-muted-foreground font-mono">
+                ELSEWHERE
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { name: "GitHub", handle: "@cristim67", url: "https://github.com/cristim67", icon: Github },
-                  { name: "LinkedIn", handle: "Cristi Miloiu", url: "https://linkedin.com/in/cristi-miloiu-3a174a267/", icon: Linkedin },
-                  { name: "Website", handle: "cristimiloiu.com", url: "https://www.cristimiloiu.com", icon: Globe },
-                  { name: "Resume", handle: "View PDF", url: "/CV_Miloiu_Cristi_en.pdf", icon: FileText },
+                  {
+                    name: "GitHub",
+                    handle: "@cristim67",
+                    url: "https://github.com/cristim67",
+                    icon: Github,
+                  },
+                  {
+                    name: "LinkedIn",
+                    handle: "Cristi Miloiu",
+                    url: "https://linkedin.com/in/cristi-miloiu-3a174a267/",
+                    icon: Linkedin,
+                  },
+                  {
+                    name: "Website",
+                    handle: "cristimiloiu.com",
+                    url: "https://www.cristimiloiu.com",
+                    icon: Globe,
+                  },
+                  {
+                    name: "Resume",
+                    handle: "View PDF",
+                    url: "/CV_Miloiu_Cristi_en.pdf",
+                    icon: FileText,
+                  },
                 ].map((social) => (
                   <Link
                     key={social.name}
@@ -645,7 +837,9 @@ export default function Home() {
                       <div className="font-medium text-foreground group-hover:text-muted-foreground transition-colors duration-300">
                         {social.name}
                       </div>
-                      <div className="text-sm text-muted-foreground">{social.handle}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {social.handle}
+                      </div>
                     </div>
                   </Link>
                 ))}
@@ -657,8 +851,12 @@ export default function Home() {
         <footer className="py-12 sm:py-16 border-t border-border">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 sm:gap-8">
             <div className="space-y-2">
-              <div className="text-sm text-muted-foreground">© {new Date().getFullYear()} Miloiu Cristi. All rights reserved.</div>
-              <div className="text-xs text-muted-foreground">Built with Next.js</div>
+              <div className="text-sm text-muted-foreground">
+                © {new Date().getFullYear()} Miloiu Cristi. All rights reserved.
+              </div>
+              <div className="text-xs text-muted-foreground">
+                Built with Next.js
+              </div>
             </div>
 
             <div className="flex items-center gap-4">
@@ -667,28 +865,34 @@ export default function Home() {
                 className="group p-3 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300"
                 aria-label="Toggle theme"
               >
-                  {mounted ? (theme === "dark" || (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches) ? (
-                  <svg
-                    className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                {mounted ? (
+                  theme === "dark" ||
+                  (theme === "system" &&
+                    typeof window !== "undefined" &&
+                    window.matchMedia("(prefers-color-scheme: dark)")
+                      .matches) ? (
+                    <svg
+                      className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                    </svg>
+                  )
                 ) : (
-                  <svg
-                    className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                  </svg>
-                )) : (
-                    <div className="w-4 h-4" />
+                  <div className="w-4 h-4" />
                 )}
               </button>
 
@@ -714,5 +918,5 @@ export default function Home() {
 
       <div className="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none"></div>
     </div>
-  )
+  );
 }

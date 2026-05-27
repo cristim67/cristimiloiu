@@ -3,21 +3,21 @@ import { ArrowLeft } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Genezio — Technical Team Lead | Cristi Miloiu",
+  title: "Genezio — Software Engineer | Cristi Miloiu",
   description:
-    "Technical Team Lead at Genezio: engineering team leadership, code reviews, sales-driven delivery, and weekly planning.",
+    "Software Engineer at Genezio (2023–2026): AI agents, RBAC, simulation engine, metrics infrastructure, and platform releases.",
   keywords: [
     "Genezio",
-    "Technical Team Lead",
-    "Engineering Leadership",
-    "Code Review",
+    "Software Engineer",
     "AI Agents",
-    "FastAPI",
+    "Cloud Architecture",
     "AWS",
+    "FastAPI",
+    "Next.js",
   ],
 }
 
-export default function GenezioPage() {
+export default function GenezioEngineerPage() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
@@ -35,9 +35,9 @@ export default function GenezioPage() {
         <header className="space-y-6 mb-16 animate-fade-in-up">
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-4">
-              <h1 className="text-4xl sm:text-5xl font-light tracking-tight">Technical Team Lead</h1>
+              <h1 className="text-4xl sm:text-5xl font-light tracking-tight">Software Engineer</h1>
               <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full">
-                2026 — Present
+                2023 — 2026
               </span>
             </div>
             <div className="text-2xl text-muted-foreground font-light">
@@ -53,13 +53,14 @@ export default function GenezioPage() {
             </div>
           </div>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            Leading the engineering team at Genezio — organizing delivery, running code reviews, prioritizing key features,
-            and aligning execution with product and sales. Previously owned most of the platform as Software Engineer.
+            Core member of the team that secured a €2M pre-seed round for a serverless cloud platform, later pivoting to
+            develop LLM brand visibility and enterprise AI agent testing solutions. Owner & Maintainer of the backend and
+            agents codebase, delivering 5000+ contributions last year.
           </p>
           <p className="text-sm text-muted-foreground">
-            Previously:{" "}
-            <Link href="/work/genezio-engineer" className="text-foreground hover:underline">
-              Software Engineer @ Genezio (2023–2026)
+            Currently:{" "}
+            <Link href="/work/genezio" className="text-foreground hover:underline">
+              Technical Team Lead @ Genezio
             </Link>
           </p>
         </header>
@@ -71,37 +72,51 @@ export default function GenezioPage() {
             <div className="grid gap-6">
               <div className="group p-6 border border-border rounded-xl bg-secondary/5 hover:border-foreground/20 hover:bg-secondary/10 transition-all duration-300">
                 <div className="flex items-start gap-4">
+                  <span className="text-2xl p-2 bg-background rounded-lg border border-border">🤖</span>
+                  <div className="space-y-2">
+                    <h3 className="font-medium text-foreground">AI Agents & Simulation</h3>
+                    <p className="text-primary/70 leading-relaxed text-sm">
+                      Engineered Red/Blue Team Agents to simulate adversarial attacks and automate functional testing.
+                      Built the daily simulation engine that executes user-defined scenarios and captures comprehensive
+                      interaction data.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="group p-6 border border-border rounded-xl bg-secondary/5 hover:border-foreground/20 hover:bg-secondary/10 transition-all duration-300">
+                <div className="flex items-start gap-4">
+                  <span className="text-2xl p-2 bg-background rounded-lg border border-border">🔐</span>
+                  <div className="space-y-2">
+                    <h3 className="font-medium text-foreground">Security & Access Control</h3>
+                    <p className="text-primary/70 leading-relaxed text-sm">
+                      Architected the RBAC system using Casbin to handle secure permissions and multi-account management.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="group p-6 border border-border rounded-xl bg-secondary/5 hover:border-foreground/20 hover:bg-secondary/10 transition-all duration-300">
+                <div className="flex items-start gap-4">
+                  <span className="text-2xl p-2 bg-background rounded-lg border border-border">📊</span>
+                  <div className="space-y-2">
+                    <h3 className="font-medium text-foreground">Infrastructure & Metrics</h3>
+                    <p className="text-primary/70 leading-relaxed text-sm">
+                      Implemented the Metrics infrastructure with robust caching for real-time analytics. Orchestrated
+                      platform releases, ensuring stability and quality assurance in production environments.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="group p-6 border border-border rounded-xl bg-secondary/5 hover:border-foreground/20 hover:bg-secondary/10 transition-all duration-300">
+                <div className="flex items-start gap-4">
                   <span className="text-2xl p-2 bg-background rounded-lg border border-border">👥</span>
                   <div className="space-y-2">
-                    <h3 className="font-medium text-foreground">Team & Delivery</h3>
+                    <h3 className="font-medium text-foreground">Leadership & Mentorship</h3>
                     <p className="text-primary/70 leading-relaxed text-sm">
-                      Organizing the engineering team, prioritizing key features, and driving execution across the product.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="group p-6 border border-border rounded-xl bg-secondary/5 hover:border-foreground/20 hover:bg-secondary/10 transition-all duration-300">
-                <div className="flex items-start gap-4">
-                  <span className="text-2xl p-2 bg-background rounded-lg border border-border">🤝</span>
-                  <div className="space-y-2">
-                    <h3 className="font-medium text-foreground">Sales & Customers</h3>
-                    <p className="text-primary/70 leading-relaxed text-sm">
-                      Owning incoming requests from Sales and supporting strategic customers when needed — including
-                      hands-on involvement on high-priority client work.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="group p-6 border border-border rounded-xl bg-secondary/5 hover:border-foreground/20 hover:bg-secondary/10 transition-all duration-300">
-                <div className="flex items-start gap-4">
-                  <span className="text-2xl p-2 bg-background rounded-lg border border-border">✅</span>
-                  <div className="space-y-2">
-                    <h3 className="font-medium text-foreground">Quality & Cadence</h3>
-                    <p className="text-primary/70 leading-relaxed text-sm">
-                      Leading code reviews and running weekly planning plus weekly sync meetings. Stepping in on critical
-                      features or fixes when the team needs senior support.
+                      Led interviewing, onboarding, and mentorship processes for interns and juniors, enforcing high code
+                      quality standards and fostering a culture of technical excellence.
                     </p>
                   </div>
                 </div>
@@ -119,14 +134,11 @@ export default function GenezioPage() {
                 "MongoDB",
                 "Redis",
                 "React",
-                "Next.js",
+                "Tailwind CSS",
                 "AWS",
-                "GCP",
-                "Azure",
-                "OpenAI",
-                "Anthropic",
+                "S3",
                 "Langfuse",
-                "Sentry",
+                "Casbin",
                 "Docker",
                 "Grafana",
               ].map((tech) => (
