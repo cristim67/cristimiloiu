@@ -330,7 +330,7 @@ export default function Home() {
                   CURRENTLY
                 </div>
                 <div className="space-y-2">
-                  <div className="text-foreground">Technical Team Lead</div>
+                  <div className="text-foreground">Technical Lead</div>
                   <div className="text-muted-foreground">
                     {" "}
                     <a
