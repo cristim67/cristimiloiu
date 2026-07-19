@@ -20,14 +20,21 @@ interface ApiResponse {
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-export function GitHubContributions({ username = "cristim67" }: { username?: string }) {
+export function GitHubContributions({
+  username = "cristim67",
+  onLastYearTotal,
+}: {
+  username?: string
+  onLastYearTotal?: (total: number) => void
+}) {
   const [data, setData] = useState<ContributionDay[]>([])
   const [lastYearData, setLastYearData] = useState<any>(null)
   const [years, setYears] = useState<number[]>([])
   const [selectedYear, setSelectedYear] = useState<number | "lastYear" | null>(null)
   const [totalContributions, setTotalContributions] = useState(0)
   const [loading, setLoading] = useState(true)
-  
+  const [failed, setFailed] = useState(false)
+
   const [showDropdown, setShowDropdown] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -36,29 +43,30 @@ export function GitHubContributions({ username = "cristim67" }: { username?: str
   useEffect(() => {
     async function fetchData() {
       setLoading(true)
+      setFailed(false)
       try {
-        const [allResponse, lastResponse] = await Promise.all([
-             fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=all`),
-             fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`)
-        ])
+        const response = await fetch(`/api/contributions?username=${username}`)
+        if (!response.ok) throw new Error(`Contributions API returned ${response.status}`)
 
-        const allJson: ApiResponse = await allResponse.json()
-        const lastJson = await lastResponse.json()
-        
+        const { all, last } = (await response.json()) as { all: ApiResponse; last: ApiResponse }
+
         // Sort data ascending
-        const sortedData = allJson.contributions.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        const sortedData = all.contributions.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
         setData(sortedData)
-        setLastYearData(lastJson)
-        
-        const availableYears = Object.keys(allJson.total)
+        setLastYearData(last)
+
+        const availableYears = Object.keys(all.total)
           .map(Number)
           .sort((a, b) => b - a)
-        
+
         setYears(availableYears)
         setSelectedYear("lastYear")
 
+        const lastYearTotal = last.contributions.reduce((acc, day) => acc + day.count, 0)
+        onLastYearTotal?.(lastYearTotal)
       } catch (error) {
         console.error("Failed to fetch GitHub contributions:", error)
+        setFailed(true)
       } finally {
         setLoading(false)
       }
@@ -230,6 +238,24 @@ export function GitHubContributions({ username = "cristim67" }: { username?: str
             <div className="h-9 w-full bg-muted/20 rounded-lg" />
             <div className="h-9 w-full bg-muted/20 rounded-lg" />
         </div>
+      </div>
+    )
+  }
+
+  if (failed) {
+    return (
+      <div className="w-full flex flex-col items-start gap-3 py-4">
+        <div className="text-muted-foreground">
+          GitHub activity is temporarily unavailable.
+        </div>
+        <a
+          href={`https://github.com/${username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-300 underline underline-offset-4 decoration-1"
+        >
+          View contributions on GitHub
+        </a>
       </div>
     )
   }

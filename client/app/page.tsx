@@ -40,35 +40,18 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-
-    async function fetchContributions() {
-      try {
-        const response = await fetch(
-          "https://github-contributions-api.jogruber.de/v4/cristim67?y=last",
-        );
-        const data = await response.json();
-
-        // Sum contributions for the last year
-        const total = data.contributions.reduce(
-          (acc: number, curr: any) => acc + curr.count,
-          0,
-        );
-
-        // Round down to nice number
-        let roundedTotal = total;
-        if (total >= 1000) {
-          roundedTotal = Math.floor(total / 1000) * 1000;
-        } else if (total >= 100) {
-          roundedTotal = Math.floor(total / 100) * 100;
-        }
-        setTotalContributions(roundedTotal);
-      } catch (error) {
-        console.error("Failed to fetch contribution count:", error);
-      }
-    }
-
-    fetchContributions();
   }, []);
+
+  const handleLastYearTotal = (total: number) => {
+    // Round down to nice number
+    let roundedTotal = total;
+    if (total >= 1000) {
+      roundedTotal = Math.floor(total / 1000) * 1000;
+    } else if (total >= 100) {
+      roundedTotal = Math.floor(total / 100) * 100;
+    }
+    setTotalContributions(roundedTotal);
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -263,15 +246,15 @@ export default function Home() {
           ref={(el) => {
             sectionsRef.current[0] = el;
           }}
-          className="min-h-screen flex items-center opacity-0"
+          className="min-h-dvh flex items-center py-16 lg:py-0 opacity-0"
         >
-          <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
-            <div className="lg:col-span-3 space-y-6 sm:space-y-8">
+          <div className="grid lg:grid-cols-5 gap-10 lg:gap-12 w-full items-center">
+            <div className="lg:col-span-3 space-y-5 sm:space-y-6">
               <div className="space-y-3 sm:space-y-2">
-                <div className="text-sm text-muted-foreground font-mono tracking-wider mt-4 sm:mt-0">
+                <div className="text-sm text-muted-foreground font-mono tracking-wider">
                   PORTFOLIO / {new Date().getFullYear()}
                 </div>
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight">
+                <h1 className="text-5xl sm:text-6xl xl:text-7xl font-light tracking-tight">
                   Miloiu
                   <br />
                   <span className="text-muted-foreground">Cristi</span>
@@ -285,11 +268,17 @@ export default function Home() {
                   <span className="text-foreground">Cloud Architecture</span>,
                   backed by a strong{" "}
                   <span className="text-foreground">Full Stack</span>{" "}
-                  foundation. Shipped over{" "}
-                  {totalContributions > 0
-                    ? totalContributions.toLocaleString()
-                    : ""}{" "}
-                  contributions last year.
+                  foundation.
+                  {totalContributions > 0 && (
+                    <>
+                      {" "}
+                      Shipped over{" "}
+                      <span className="text-foreground">
+                        {totalContributions.toLocaleString()}
+                      </span>{" "}
+                      contributions last year.
+                    </>
+                  )}
                 </p>
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-sm text-muted-foreground">
@@ -324,12 +313,12 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="lg:col-span-2 flex flex-col justify-end space-y-6 sm:space-y-8 mt-8 lg:mt-0">
-              <div className="space-y-4">
+            <div className="lg:col-span-2 flex flex-col justify-center space-y-6 mt-8 lg:mt-0">
+              <div className="space-y-3">
                 <div className="text-sm text-muted-foreground font-mono">
                   CURRENTLY
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <div className="text-foreground">Technical Lead</div>
                   <div className="text-muted-foreground">
                     {" "}
@@ -348,12 +337,12 @@ export default function Home() {
               </div>
 
               <div className="space-y-4">
-                <div className="space-y-6">
+                <div className="space-y-4">
                   <div>
                     <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">
                       AI & Backend
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {[
                         "LLMs",
                         "AI Agents",
@@ -370,7 +359,7 @@ export default function Home() {
                       ].map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
+                          className="px-2.5 py-0.5 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
                         >
                           {skill}
                         </span>
@@ -382,7 +371,7 @@ export default function Home() {
                     <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">
                       Web & Cloud
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {[
                         "TypeScript",
                         "React",
@@ -398,7 +387,7 @@ export default function Home() {
                       ].map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
+                          className="px-2.5 py-0.5 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
                         >
                           {skill}
                         </span>
@@ -410,7 +399,7 @@ export default function Home() {
                     <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">
                       Dev Tools & Productivity
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {[
                         "Jira",
                         "Confluence",
@@ -423,7 +412,7 @@ export default function Home() {
                       ].map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
+                          className="px-2.5 py-0.5 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
                         >
                           {skill}
                         </span>
@@ -460,7 +449,7 @@ export default function Home() {
             </div>
 
             <div className="p-6 sm:p-8 border border-border rounded-lg">
-              <GitHubContributions />
+              <GitHubContributions onLastYearTotal={handleLastYearTotal} />
             </div>
           </div>
         </section>
