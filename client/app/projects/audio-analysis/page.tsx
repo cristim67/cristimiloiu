@@ -1,8 +1,10 @@
 import Link from "next/link"
-import { ArrowLeft, Github, ArrowUpRight } from "lucide-react"
+import { ArrowLeft, ArrowUpRight } from "lucide-react"
+import { Github } from "@/components/brand-icons"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/projects/audio-analysis" },
   title: "Audio Analysis Platform | Cristi Miloiu",
   description: "A hardware-software platform for real-time audio processing using ESP32, FFT analysis, and WebSockets.",
   keywords: ["ESP32", "Audio Analysis", "FFT", "WebSockets", "FastAPI", "React", "Hardware"]

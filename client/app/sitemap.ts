@@ -1,29 +1,10 @@
 import { MetadataRoute } from "next";
+import { PAGE_ROUTES, SITE_URL } from "@/lib/site";
 
-export const baseUrl = "https://cristimiloiu.com";
+export const baseUrl = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = [
-    "",
-    "/work/genezio",
-    "/work/genezio-engineer",
-    "/work/genezio-intern",
-    "/work/lse",
-    "/work/huawei",
-    "/education/master",
-    "/education/bachelor",
-    "/projects/bachelor-project",
-    "/projects/portfolio",
-    "/projects/audio-analysis",
-    "/projects/facial-emotion-recognition",
-    "/projects/comparative-modeling",
-    "/awards/bachelor-thesis",
-    "/awards/api-in-seconds",
-    "/awards/electron-hackathon",
-    "/awards/scientific-communications-2023",
-  ];
-
-  return routes.map((route) => ({
+  return PAGE_ROUTES.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: "monthly",

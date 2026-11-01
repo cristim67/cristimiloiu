@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/work/genezio-intern" },
   title: "Genezio Intern Experience | Cristi Miloiu",
   description: "Internship experience at Genezio: CLI deployment, RAG systems, and CI/CD automation.",
   keywords: ["Genezio", "Internship", "CLI", "RAG", "LangChain", "OpenAI", "CI/CD"]
@@ -28,7 +29,7 @@ export default function GenezioInternPage() {
             <div className="space-y-2">
                 <div className="flex items-center justify-between gap-4">
                     <h1 className="text-4xl sm:text-5xl font-light tracking-tight">Full Stack Intern</h1>
-                    <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full">June 2023 — Aug 2023</span>
+                    <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full">June 2023 - Aug 2023</span>
                 </div>
                 <div className="text-2xl text-muted-foreground font-light">
                     @ <a href="https://genezio.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors border-b border-border hover:border-foreground pb-0.5">Genezio</a>

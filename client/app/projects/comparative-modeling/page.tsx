@@ -1,8 +1,10 @@
 import Link from "next/link"
-import { ArrowLeft, Github, ArrowUpRight } from "lucide-react"
+import { ArrowLeft, ArrowUpRight } from "lucide-react"
+import { Github } from "@/components/brand-icons"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/projects/comparative-modeling" },
   title: "Comparative Modeling Environments | Cristi Miloiu",
   description: "Benchmarking High Performance Computing (HPC) approaches by simulating fire propagation using Cellular Automata.",
   keywords: ["HPC", "Rust", "Go", "C++", "Python", "Cellular Automata", "Parallel Computing"]

@@ -1,8 +1,10 @@
 import Link from "next/link"
-import { ArrowLeft, Github, ArrowUpRight } from "lucide-react"
+import { ArrowLeft, ArrowUpRight } from "lucide-react"
+import { Github } from "@/components/brand-icons"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/projects/bachelor-project" },
   title: "Bachelor Project - AI Agent System | Cristi Miloiu",
   description: "A multi-agent system using Google Gemini to generate REST/GraphQL APIs. Architected with FastAPI, MongoDB, and SSE.",
   keywords: ["AI Agents", "Gemini", "FastAPI", "MongoDB", "REST API", "GraphQL", "Bachelor Project"]

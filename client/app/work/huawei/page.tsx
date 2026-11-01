@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/work/huawei" },
   title: "Huawei Work Experience | Cristi Miloiu",
   description: "Internship experience at Huawei Enterprise GSC: Enterprise storage protocols and Linux administration.",
   keywords: ["Huawei", "Internship", "Storage", "Linux", "Server Administration"]
@@ -28,7 +29,7 @@ export default function HuaweiPage() {
             <div className="space-y-2">
                 <div className="flex items-center justify-between gap-4">
                     <h1 className="text-4xl sm:text-5xl font-light tracking-tight">System Engineering Intern</h1>
-                    <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full">July 2022 — Sept 2022</span>
+                    <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full">July 2022 - Sept 2022</span>
                 </div>
                 <div className="text-2xl text-muted-foreground font-light">
                     @ <a href="https://www.huawei.com/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors border-b border-border hover:border-foreground pb-0.5">Huawei Enterprise GSC</a>

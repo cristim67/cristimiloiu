@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/work/lse" },
   title: "LSE Work Experience | Cristi Miloiu",
   description: "Work as Technical Coordinator at League of Electronics Students (LSE), managing IT teams and delivering web applications.",
   keywords: ["LSE", "Technical Coordinator", "Leadership", "Web Development", "React", "Node.js"]
@@ -28,7 +29,7 @@ export default function LsePage() {
             <div className="space-y-2">
                 <div className="flex items-center justify-between gap-4">
                     <h1 className="text-4xl sm:text-5xl font-light tracking-tight">Technical Coordinator</h1>
-                    <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full">Oct 2022 — July 2024</span>
+                    <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full">Oct 2022 - July 2024</span>
                 </div>
                 <div className="text-2xl text-muted-foreground font-light">
                     @ <a href="https://lsebucuresti.org/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors border-b border-border hover:border-foreground pb-0.5">League of Electronics Students</a>

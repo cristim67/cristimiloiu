@@ -3,15 +3,8 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { GitHubContributions } from "@/components/github-contributions";
-import {
-  Github,
-  ArrowUpRight,
-  Linkedin,
-  Globe,
-  Mail,
-  Phone,
-  FileText,
-} from "lucide-react";
+import { ArrowUpRight, Globe, Mail, Phone, FileText } from "lucide-react";
+import { Github, Linkedin } from "@/components/brand-icons";
 import { useTheme } from "next-themes";
 
 interface Job {
@@ -79,26 +72,28 @@ export default function Home() {
 
   const jobs: Job[] = [
     {
-      year: "May 2026 — Present",
-      role: "Technical Team Lead",
+      year: "May 2026 - Present",
+      role: "Tech Lead & PO",
       company: "Genezio",
       description:
-        "Leading the engineering team: organizing delivery, code reviews, prioritizing key features, and aligning with Sales. Running weekly planning and sync meetings; supporting strategic customers when needed.",
+        "Leading the engineering team as Tech Lead and Product Owner: roadmap, mentoring, code reviews, releases, platform security with SOC 2 Type II, and cloud and LLM cost optimization. Hands-on, I built core parts of the engine that reverse-engineers 9 AI assistants, the public REST API (100+ endpoints) and MCP server, enterprise SSO with Keycloak and Casbin RBAC, and AI Shopping.",
       link: "/work/genezio",
       tech: [
+        "Azure OpenAI",
+        "Azure AI Foundry",
         "Python",
+        "Go",
         "FastAPI",
         "PostgreSQL",
-        "MongoDB",
-        "AWS",
-        "OpenAI",
+        "Redis",
+        "Nomad",
+        "Keycloak",
         "Anthropic",
-        "Langfuse",
-        "Sentry",
+        "MCP",
       ],
     },
     {
-      year: "Sept 2023 — Apr 2026",
+      year: "Sept 2023 - Apr 2026",
       role: "Software Engineer",
       company: "Genezio",
       description:
@@ -117,7 +112,7 @@ export default function Home() {
       ],
     },
     {
-      year: "June 2023 — Aug 2023",
+      year: "June 2023 - Aug 2023",
       role: "Full Stack Intern",
       company: "Genezio",
       description:
@@ -133,7 +128,7 @@ export default function Home() {
       ],
     },
     {
-      year: "Oct 2022 — July 2024",
+      year: "Oct 2022 - July 2024",
       role: "Technical Coordinator",
       company: "League of Electronics Students",
       description:
@@ -150,7 +145,7 @@ export default function Home() {
       ],
     },
     {
-      year: "July 2022 — Sept 2022",
+      year: "July 2022 - Sept 2022",
       role: "System Engineering Intern",
       company: "Huawei Enterprise GSC",
       description:
@@ -263,7 +258,7 @@ export default function Home() {
 
               <div className="space-y-6 max-w-lg">
                 <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                  Software Engineer specialized in{" "}
+                  Tech Lead specialized in{" "}
                   <span className="text-foreground">AI Agents</span> and{" "}
                   <span className="text-foreground">Cloud Architecture</span>,
                   backed by a strong{" "}
@@ -319,7 +314,7 @@ export default function Home() {
                   CURRENTLY
                 </div>
                 <div className="space-y-1">
-                  <div className="text-foreground">Technical Lead</div>
+                  <div className="text-foreground">Tech Lead & PO</div>
                   <div className="text-muted-foreground">
                     {" "}
                     <a
@@ -331,7 +326,7 @@ export default function Home() {
                     </a>
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    May 2026 — Present
+                    May 2026 - Present
                   </div>
                 </div>
               </div>
@@ -465,7 +460,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <h2 className="text-3xl sm:text-4xl font-light">Selected Work</h2>
               <div className="text-sm text-muted-foreground font-mono">
-                2022 — {new Date().getFullYear()}
+                2022 - {new Date().getFullYear()}
               </div>
             </div>
 
@@ -536,7 +531,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <h2 className="text-3xl sm:text-4xl font-light">Projects</h2>
               <div className="text-sm text-muted-foreground font-mono">
-                2023 — {new Date().getFullYear()}
+                2023 - {new Date().getFullYear()}
               </div>
             </div>
 

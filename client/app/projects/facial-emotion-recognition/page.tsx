@@ -1,8 +1,10 @@
 import Link from "next/link"
-import { ArrowLeft, Github, ArrowUpRight } from "lucide-react"
+import { ArrowLeft, ArrowUpRight } from "lucide-react"
+import { Github } from "@/components/brand-icons"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/projects/facial-emotion-recognition" },
   title: "Facial Emotion Recognition | Cristi Miloiu",
   description: "High-performance Facial Emotion Recognition (FER) system using Vision Transformers (ViT) and advanced optimization techniques.",
   keywords: ["FER", "Computer Vision", "Vision Transformers", "PyTorch", "Deep Learning", "Streamlit"]
