@@ -219,7 +219,7 @@ ${list(EDUCATION_AND_AWARDS)}
 }
 
 export function profileMarkdown(): string {
-  return `# ${PERSON.name} - Software Engineer
+  return `# ${PERSON.name} - Tech Lead & Product Owner
 
 ${PERSON.headline}
 
