@@ -3,6 +3,7 @@ import { ArrowLeft, Globe } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/projects/portfolio" },
   title: "Personal Portfolio Website | Cristi Miloiu",
   description: "A modern, high-performance portfolio website built with Next.js and Tailwind CSS. Optimized for speed and security.",
   keywords: ["Portfolio", "Next.js", "Tailwind CSS", "Vercel", "Cloudflare"]

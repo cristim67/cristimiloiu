@@ -12,7 +12,8 @@
 \usepackage[english]{babel}
 \usepackage{tabularx}
 \usepackage{fontawesome5}
-\input{glyphtounicode}
+\usepackage{iftex}
+\ifPDFTeX\input{glyphtounicode}\fi
 
 % Font options
 \usepackage[sfdefault]{roboto}  % Sans-serif font
@@ -38,7 +39,7 @@
 \titleformat{\section}{\Large\bfseries\scshape\raggedright}{}{0em}{}[\titlerule]
 
 % Ensure PDF is machine readable
-\pdfgentounicode=1
+\ifPDFTeX\pdfgentounicode=1\fi
 
 % Custom commands
 \newcommand{\resumeItem}[1]{\item\small{#1}}
@@ -65,20 +66,29 @@
 
 \section{Technical Skills}
 \resumeSubHeadingList
-  \resumeItem{\textbf{AI \& Backend}: LLMs, AI Agents, RAG, OpenAI, Anthropic, Langfuse, Python, FastAPI, PostgreSQL, MongoDB (Atlas), Redis}
-  \resumeItem{\textbf{Web \& Cloud}: TypeScript, React, Next.js, Tailwind CSS, Docker, AWS, GCP, Azure, Cloudflare, Grafana, Sentry}
-  \resumeItem{\textbf{Dev Tools \& Productivity}: Jira, Confluence, Slack, GitHub, Postman, TablePlus, Stripe, Upstash, Cursor}
+  \resumeItem{\textbf{AI \& Backend}: LLMs, AI Agents, MCP, RAG, OpenAI, Anthropic, Langfuse, Python, Go, FastAPI, PostgreSQL, MongoDB, Redis, LanceDB}
+  \resumeItem{\textbf{Cloud \& Web}: Azure (AI Foundry, Blob Storage, VMs), AWS, Docker, Nomad, GitHub Actions, TypeScript, React, Grafana, Sentry}
+  \resumeItem{\textbf{Security \& Compliance}: SOC 2 Type II (Vanta), Keycloak (SSO/SAML), Casbin (RBAC), OWASP, SSRF, rate limiting, audit logs}
+  \resumeItem{\textbf{Tools}: GitHub, Stripe, Jira, Claude Code, Cursor}
 \resumeSubHeadingListEnd
 
 \section{Experience}
 \resumeSubHeadingList
   \resumeSubheading
-      {Technical Team Lead}{May 2026 -- Present}
+      {Tech Lead \& PO}{May 2026 -- Present}
       {\href{https://genezio.com/}{Genezio}}{Bucharest, Romania}
       \resumeSubHeadingList
-          \resumeItem{\textbullet\ Organizing the \textbf{engineering team}, prioritizing \textbf{key features}, and driving execution.}
-          \resumeItem{\textbullet\ Owning incoming requests from \textbf{Sales} and supporting \textbf{strategic customers} when needed.}
-          \resumeItem{\textbullet\ Leading \textbf{code reviews} and running \textbf{weekly planning} + \textbf{weekly sync meetings}.}
+          \resumeItem{\textbullet\ Lead \textbf{engineering} as \textbf{Product Owner}: shape the roadmap, set priorities, mentor engineers, and own reviews and releases.}
+          \resumeItem{\textbullet\ Work with the \textbf{co-founders}, \textbf{Sales}, and \textbf{Marketing} to turn fast-moving, ambiguous ideas into clear plans the team can ship.}
+          \resumeItem{\textbullet\ Built core parts of the \textbf{product's engine}, tracking how \textbf{9 AI assistants} (ChatGPT, Gemini, Claude, and more) talk about each brand.}
+          \resumeItem{\textbullet\ Opened the platform to integrations with a \textbf{public REST API} (100+ endpoints), an \textbf{MCP server} for AI agents, and developer docs.}
+          \resumeItem{\textbullet\ Took \textbf{AI Shopping} from idea to release, showing brands which of their products AI recommends and how they are perceived.}
+          \resumeItem{\textbullet\ Launched \textbf{ChatGPT Ads Intelligence} and \textbf{Agent Analytics}, two new products that widened what customers can track.}
+          \resumeItem{\textbullet\ Made the platform \textbf{enterprise-ready} with SSO (\textbf{Keycloak}, SAML) and role-based access (\textbf{Casbin}).}
+          \resumeItem{\textbullet\ Lead \textbf{platform security} and \textbf{SOC 2 Type II} compliance in \textbf{Vanta}, and answer the security sections of enterprise RFPs.}
+          \resumeItem{\textbullet\ Sped up delivery with a \textbf{monorepo} and one \textbf{CI/CD} pipeline that ships \textbf{20+ services} to \textbf{HashiCorp Nomad}.}
+          \resumeItem{\textbullet\ Lowered \textbf{cloud and LLM costs} with smaller models, \textbf{Azure OpenAI} batch tiers, prompt caching, and right-sized services.}
+          \resumeItem{\textbullet\ Stay hands-on as the top contributor, with \textbf{8,000+ GitHub contributions} in the last year.}
       \resumeSubHeadingListEnd
   \resumeSubheading
       {Software Engineer}{Sept 2023 -- Apr 2026}
@@ -88,10 +98,8 @@
           \resumeItem{\textbullet\ \textbf{Owner \& Maintainer} of the backend and agents codebase, delivering \textbf{5000+ contributions} last year.}
           \resumeItem{\textbullet\ Architected the \textbf{RBAC system using Casbin} to handle secure permissions and multi-account management.}
           \resumeItem{\textbullet\ Built the \textbf{daily simulation engine} that executes user-defined scenarios and captures comprehensive interaction data.}
-
           \resumeItem{\textbullet\ Implemented the \textbf{Metrics infrastructure} with robust \textbf{caching} for real-time analytics.}
           \resumeItem{\textbullet\ Engineered \textbf{Red/Blue Team Agents} to simulate adversarial attacks and automate functional testing.}
-          \resumeItem{\textbullet\ Orchestrated \textbf{platform releases}, ensuring stability and quality assurance in production.}
           \resumeItem{\textbullet\ Led \textbf{interviewing, onboarding, and mentorship} for interns/juniors, enforcing high code quality standards.}
       \resumeSubHeadingListEnd
   \resumeSubheading

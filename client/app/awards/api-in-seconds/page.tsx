@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/awards/api-in-seconds" },
   title: "API in Seconds Award | Cristi Miloiu",
   description: "4th Place at Scientific Communications Session for API in Seconds prototype.",
   keywords: ["Award", "API in Seconds", "UPB", "Backend Generation", "AI"]
@@ -27,7 +28,7 @@ export default function ApiInSecondsAwardPage() {
             <header className="space-y-6 mb-16 animate-fade-in-up">
             <div className="space-y-2">
                 <div className="flex items-center justify-between gap-4">
-                    <h1 className="text-3xl sm:text-4xl font-light tracking-tight">4th Place — Scientific Communications Session</h1>
+                    <h1 className="text-3xl sm:text-4xl font-light tracking-tight">4th Place - Scientific Communications Session</h1>
                     <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full whitespace-nowrap">May 2024</span>
                 </div>
                  <div className="text-xl text-muted-foreground font-light">

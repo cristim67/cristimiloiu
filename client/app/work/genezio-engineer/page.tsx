@@ -3,9 +3,10 @@ import { ArrowLeft } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Genezio — Software Engineer | Cristi Miloiu",
+  alternates: { canonical: "/work/genezio-engineer" },
+  title: "Genezio - Software Engineer | Cristi Miloiu",
   description:
-    "Software Engineer at Genezio (2023–2026): AI agents, RBAC, simulation engine, metrics infrastructure, and platform releases.",
+    "Software Engineer at Genezio (2023 - 2026): AI agents, RBAC, simulation engine, metrics infrastructure, and platform releases.",
   keywords: [
     "Genezio",
     "Software Engineer",
@@ -37,7 +38,7 @@ export default function GenezioEngineerPage() {
             <div className="flex items-center justify-between gap-4">
               <h1 className="text-4xl sm:text-5xl font-light tracking-tight">Software Engineer</h1>
               <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full">
-                2023 — 2026
+                2023 - 2026
               </span>
             </div>
             <div className="text-2xl text-muted-foreground font-light">
@@ -60,7 +61,7 @@ export default function GenezioEngineerPage() {
           <p className="text-sm text-muted-foreground">
             Currently:{" "}
             <Link href="/work/genezio" className="text-foreground hover:underline">
-              Technical Team Lead @ Genezio
+              Tech Lead & PO @ Genezio
             </Link>
           </p>
         </header>

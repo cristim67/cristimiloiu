@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/awards/electron-hackathon" },
   title: "Electron Hackathon 1st Place | Cristi Miloiu",
   description: "1st Place at Electron Hackathon for 'Electrify the Campus', a smart parking solution.",
   keywords: ["Hackathon", "1st Place", "Smart Parking", "YOLOv5", "ESP32", "IoT"]
@@ -27,7 +28,7 @@ export default function ElectronHackathonPage() {
             <header className="space-y-6 mb-16 animate-fade-in-up">
             <div className="space-y-2">
                 <div className="flex items-center justify-between gap-4">
-                    <h1 className="text-3xl sm:text-4xl font-light tracking-tight">1st Place — Electron Hackathon</h1>
+                    <h1 className="text-3xl sm:text-4xl font-light tracking-tight">1st Place - Electron Hackathon</h1>
                     <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full whitespace-nowrap">May 2023</span>
                 </div>
                  <div className="text-xl text-muted-foreground font-light">

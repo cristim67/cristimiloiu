@@ -3,6 +3,7 @@ import { ArrowLeft, BookOpen } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/education/master" },
   title: "M.Eng. Education | Cristi Miloiu",
   description: "Master's degree in Information and Computing Systems Engineering at UPB.",
   keywords: ["Master's Degree", "UPB", "Information Systems", "LLMs", "Education"]
@@ -28,7 +29,7 @@ export default function MasterEducationPage() {
             <div className="space-y-2">
                 <div className="flex items-center justify-between gap-4">
                     <h1 className="text-3xl sm:text-4xl font-light tracking-tight">M.Eng. in Information & Computing Systems</h1>
-                    <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full whitespace-nowrap">Oct 2025 — Present</span>
+                    <span className="text-muted-foreground font-mono text-sm border border-border px-3 py-1 rounded-full whitespace-nowrap">Oct 2025 - Present</span>
                 </div>
                 <div className="text-xl text-muted-foreground font-light">
                     @ <a href="https://upb.ro/en/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors border-b border-border hover:border-foreground pb-0.5">National University of Science and Technology Politehnica Bucharest</a>
