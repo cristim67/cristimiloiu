@@ -82,6 +82,16 @@ const jsonLd = {
         "@type": "Organization",
         name: PERSON.employer.name,
         url: PERSON.employer.url,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: PERSON.location.city,
+          addressCountry: PERSON.location.countryCode,
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          url: "https://genezio.com/contact-sales/",
+        },
       },
       alumniOf: {
         "@type": "CollegeOrUniversity",
