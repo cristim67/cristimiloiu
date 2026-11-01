@@ -284,9 +284,10 @@ export default function Home() {
                   <div className="hidden sm:block text-border">|</div>
                   <div>Bucharest, Romania</div>
                   <div className="hidden sm:block text-border">|</div>
-                  <Link
+                  <a
                     href="/CV_Miloiu_Cristi_en.pdf"
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-1 text-foreground hover:text-muted-foreground transition-colors duration-200 group"
                   >
                     Resume
@@ -303,7 +304,7 @@ export default function Home() {
                         d="M7 17L17 7M17 7H7M17 7V17"
                       />
                     </svg>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
@@ -334,7 +335,7 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="space-y-4">
                   <div>
-                    <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">
+                    <div className="text-[10px] text-muted-foreground font-mono mb-2 uppercase tracking-wider">
                       AI & Backend
                     </div>
                     <div className="flex flex-wrap gap-1.5">
@@ -363,7 +364,7 @@ export default function Home() {
                   </div>
 
                   <div>
-                    <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">
+                    <div className="text-[10px] text-muted-foreground font-mono mb-2 uppercase tracking-wider">
                       Web & Cloud
                     </div>
                     <div className="flex flex-wrap gap-1.5">
@@ -391,7 +392,7 @@ export default function Home() {
                   </div>
 
                   <div>
-                    <div className="text-[10px] text-muted-foreground/60 font-mono mb-2 uppercase tracking-wider">
+                    <div className="text-[10px] text-muted-foreground font-mono mb-2 uppercase tracking-wider">
                       Dev Tools & Productivity
                     </div>
                     <div className="flex flex-wrap gap-1.5">
@@ -483,6 +484,7 @@ export default function Home() {
                     {job.link && (
                       <Link
                         href={job.link}
+                        aria-label={`${job.role} at ${job.company}`}
                         className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group/link after:absolute after:inset-0"
                       >
                         <ArrowUpRight className="w-4 h-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
@@ -498,7 +500,7 @@ export default function Home() {
                     {job.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2.5 py-0.5 text-xs font-medium text-muted-foreground/80 bg-secondary/30 rounded-full border border-transparent group-hover:border-border transition-colors duration-300"
+                        className="px-2.5 py-0.5 text-xs font-medium text-muted-foreground bg-secondary/30 rounded-full border border-transparent group-hover:border-border transition-colors duration-300"
                       >
                         {tech}
                       </span>
@@ -553,6 +555,7 @@ export default function Home() {
                     {project.link && (
                       <Link
                         href={project.link}
+                        aria-label={project.title}
                         className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group/link after:absolute after:inset-0"
                       >
                         <ArrowUpRight className="w-4 h-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
@@ -568,7 +571,7 @@ export default function Home() {
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2.5 py-0.5 text-xs font-medium text-muted-foreground/80 bg-secondary/30 rounded-full border border-transparent group-hover:border-border transition-colors duration-300"
+                        className="px-2.5 py-0.5 text-xs font-medium text-muted-foreground bg-secondary/30 rounded-full border border-transparent group-hover:border-border transition-colors duration-300"
                       >
                         {tech}
                       </span>
@@ -810,6 +813,7 @@ export default function Home() {
                   <Link
                     key={social.name}
                     href={social.url}
+                    prefetch={false}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex items-center gap-4 p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300 hover:shadow-sm"
@@ -880,7 +884,11 @@ export default function Home() {
                 )}
               </button>
 
-              <button className="group p-3 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300">
+              <a
+                href="mailto:miloiuc4@gmail.com"
+                aria-label="Send me an email"
+                className="group p-3 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300"
+              >
                 <svg
                   className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
                   fill="none"
@@ -894,7 +902,7 @@ export default function Home() {
                     d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                   />
                 </svg>
-              </button>
+              </a>
             </div>
           </div>
         </footer>
