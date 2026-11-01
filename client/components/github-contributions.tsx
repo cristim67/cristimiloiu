@@ -275,7 +275,7 @@ export function GitHubContributions({
             <div className="overflow-x-auto scrollbar-hide pb-2 relative z-0">
                 <div className="min-w-max">
                         {/* Month Labels */}
-                        <div className="flex mb-3 text-xs font-medium text-muted-foreground/60 select-none">
+                        <div className="flex mb-3 text-xs font-medium text-muted-foreground select-none">
                         <div className="w-8 shrink-0" />
                         <div className="relative flex h-4">
                             {monthLabels.map((label, i) => (
@@ -288,7 +288,7 @@ export function GitHubContributions({
 
                         <div className="flex gap-2">
                             {/* Weekday Labels */}
-                            <div className="flex flex-col gap-[4px] py-[2px] text-[10px] font-medium text-muted-foreground/50 w-8 select-none pt-[14px] ">
+                            <div className="flex flex-col gap-[4px] py-[2px] text-[10px] font-medium text-muted-foreground w-8 select-none pt-[14px] ">
                                 {/* 
                                     Grid Pitch is 10px (cell) + 4px (gap) = 14px.
                                     We align with rows 1 (Mon), 3 (Wed), 5 (Fri).
