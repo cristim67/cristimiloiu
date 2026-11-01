@@ -51,7 +51,10 @@ export default function Home() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in-up");
+            // The intro is visible from the first paint, so it does not fade in.
+            if (entry.target.id !== "intro") {
+              entry.target.classList.add("animate-fade-in-up");
+            }
             setActiveSection(entry.target.id);
           }
         });
@@ -241,7 +244,7 @@ export default function Home() {
           ref={(el) => {
             sectionsRef.current[0] = el;
           }}
-          className="min-h-dvh flex items-center py-16 lg:py-0 opacity-0"
+          className="min-h-dvh flex items-center py-16 lg:py-0"
         >
           <div className="grid lg:grid-cols-5 gap-10 lg:gap-12 w-full items-center">
             <div className="lg:col-span-3 space-y-5 sm:space-y-6">
@@ -264,9 +267,11 @@ export default function Home() {
                   backed by a strong{" "}
                   <span className="text-foreground">Full Stack</span>{" "}
                   foundation.
+                </p>
+                {/* Separate from the tagline so the late GitHub count does not move the LCP. */}
+                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed min-h-[1.75em]">
                   {totalContributions > 0 && (
                     <>
-                      {" "}
                       Shipped over{" "}
                       <span className="text-foreground">
                         {totalContributions.toLocaleString()}
