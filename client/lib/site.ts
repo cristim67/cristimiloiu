@@ -1,5 +1,5 @@
 // Shared site and profile data used by structured data (JSON-LD), llms.txt,
-// Markdown alternates and the trust pages (about, contact, privacy).
+// Markdown alternates and the trust pages (about, contact).
 // Keep this in sync with the content shown on the homepage.
 
 export const SITE_URL = "https://www.cristimiloiu.com"
@@ -150,7 +150,7 @@ export const EDUCATION_AND_AWARDS: Entry[] = [
   },
 ]
 
-export const TRUST_PAGES = ["/about", "/contact", "/privacy"]
+export const TRUST_PAGES = ["/about", "/contact"]
 
 // All HTML page routes. Used by the sitemap and by the proxy to tell known
 // pages apart from 404s when an agent asks for Markdown.
@@ -195,7 +195,6 @@ ${WHEN_TO_USE}
 - [Full profile for LLMs](${SITE_URL}/llms-full.txt): complete text version of the site
 - [About](${SITE_URL}/about): short biography
 - [Contact](${SITE_URL}/contact): how to get in touch
-- [Privacy](${SITE_URL}/privacy): privacy policy for this website
 - [Resume (PDF)](${SITE_URL}${PERSON.resume})
 
 ## Work

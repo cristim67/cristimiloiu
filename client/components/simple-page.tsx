@@ -2,7 +2,7 @@ import type React from "react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
-// Shared shell for plain text pages (about, contact, privacy), matching the
+// Shared shell for plain text pages (about, contact), matching the
 // look of the work and project detail pages.
 export function SimplePage({
   title,
@@ -40,7 +40,6 @@ export function SimplePage({
           <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
           <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
           <Link href="/contact" className="hover:text-foreground transition-colors">Contact</Link>
-          <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
         </nav>
       </main>
     </div>
