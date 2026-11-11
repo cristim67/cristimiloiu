@@ -853,7 +853,6 @@ export default function Home() {
               <nav aria-label="Site pages" className="flex flex-wrap gap-6 pt-2 text-sm text-muted-foreground">
                 <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
                 <Link href="/contact" className="hover:text-foreground transition-colors">Contact</Link>
-                <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
               </nav>
             </div>
 
